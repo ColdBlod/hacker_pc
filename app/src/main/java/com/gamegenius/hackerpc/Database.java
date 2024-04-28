@@ -116,7 +116,11 @@ public class Database {
                         rams[ram_inventory_len-1] = text.split(";");
                     }
                 }
-            } catch (Exception e){e.printStackTrace();}
+            } catch (IOException e){
+                FileWriter filewriter = new FileWriter(path + "/details.txt");
+                filewriter.write("0\ni3-1000G1");
+                filewriter.close();
+            }
         } catch (Exception e) {
             try {
                 FileWriter fileWriter = new FileWriter(path + "/inventory.txt");
