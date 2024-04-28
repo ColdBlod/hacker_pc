@@ -1135,7 +1135,7 @@ public class MainActivity extends Activity {
         LinearLayout showcase_layout = findViewById(R.id.showcase_layout);
         // end
 
-        settings.current_showcase = "processor";
+        settings.current_showcase = 0;
 
         back.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.inventory_pc);inventory_pc();}});
 
@@ -1144,17 +1144,17 @@ public class MainActivity extends Activity {
 
     public void show_category(){
         LinearLayout main_lt = findViewById(R.id.showcase_layout);
-        if (settings.current_showcase == "processor"){
+        if (settings.current_showcase == 0){
             for (int i = 0;i < db.processors_inventory_len; i++){
-                if (db.processors[i + 1][0] != null){
+                if (db.processors[i][0] != null){
                     ImageButton btn = new ImageButton(getApplicationContext());
                     btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f));
                     btn.setScaleType(ImageView.ScaleType.FIT_XY);
                     btn.setBackgroundColor(getColor(R.color.spirit));
 
                     try {
-                        InputStream inputStream = getAssets().open("processors/" + db.processors[i + 1][0] + ".png");
-                        Drawable drawable = Drawable.createFromStream(inputStream, db.processors[i + 1][0]);
+                        InputStream inputStream = getAssets().open("processors/" + db.processors[i][0] + ".png");
+                        Drawable drawable = Drawable.createFromStream(inputStream, db.processors[i][0]);
                         btn.setImageDrawable(drawable);
                         main_lt.addView(btn);
                     } catch (Exception e) {

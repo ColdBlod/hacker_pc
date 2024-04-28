@@ -12,7 +12,7 @@ public class Settings {
     public int how_many = 1, realutionship_age = 0, showed_learn = 0, all_pc_complect=0, showed_elements_magazine=0, showed_elements=0;
     public String[] names = new String[10];
     public String[] jobs = new String[10];
-    public String current_showcase=null;
+    public int current_showcase=-1;
     public int[] showed_magazine_ls = new int[26];
     public HashMap<String, String[]> pets = new HashMap();
     public String[] list_of_pets = new String[]{"cat", "dog", "gui na pig", "marmot", "weasel", "mouses", "bird", "fishes"}, housing_house=new String[]{"dormitory", "studio", "one-room apartment", "kopeck piece", "three bedroom apartment", "villa", "personal island"};
