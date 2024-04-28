@@ -228,7 +228,7 @@ public class Settings {
             String[][] intel = new String[1][20]; // количество процессоров замени x
 
             // копировать от сюда
-            proc = new String[]{"Intel core i3-1000G1", "price", "cores", "potocs", "ecocores", "L2", "L3", "Z", "core", "quality", "operative_memory", "heighest_operative_quality", "maxmemory", "heat_generation", "maxtemperature", "graphic_model", "quality_graphic", "virtualization", "year"};
+            proc = new String[]{"i3-1000G1", "price", "cores", "potocs", "ecocores", "L2", "L3", "Z", "core", "quality", "operative_memory", "heighest_operative_quality", "maxmemory", "heat_generation", "maxtemperature", "graphic_model", "quality_graphic", "virtualization", "year"};
             intel[0] = proc; // i замени на индекс процессора индексация идёт от 0
             // до сюда не включительно
 

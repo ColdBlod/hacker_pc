@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -1133,6 +1134,8 @@ public class MainActivity extends Activity {
 
         settings.current_showcase = 0;
 
+        processor.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {settings.current_showcase = 0;show_category();}});
+
         back.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.inventory_pc);inventory_pc();}});
 
         show_category();
@@ -1172,9 +1175,9 @@ public class MainActivity extends Activity {
             } else {
                 ImageView img = new ImageView(getApplicationContext());
                 img.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
+                System.out.println("processors/" + settings.new_pc[0] + ".png");
                 try{
-                    InputStream inputStream = getAssets().open("processors/" + settings.new_pc[0]);
+                    InputStream inputStream = getAssets().open("processors/" + settings.new_pc[0] + ".png");
                     Drawable drawable = Drawable.createFromStream(inputStream, settings.new_pc[0]);
                     img.setImageDrawable(drawable);
 
@@ -1197,6 +1200,34 @@ public class MainActivity extends Activity {
                 Button about = new Button(getApplicationContext());
                 about.setText("About");
                 about.setBackgroundColor(getColor(R.color.light_blue));
+                about.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        main_lt.removeAllViews();
+                        main_lt.addView(img);
+                        Button back_btn = new Button(getApplicationContext());
+                        back_btn.setText("Back");
+                        back_btn.setBackgroundColor(getColor(R.color.red));
+                        back_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                main_lt.removeAllViews();
+                                main_lt.addView(img);
+                                main_lt.addView(about);
+                                main_lt.addView(replacement_btn);
+                            }
+                        });
+
+                        ScrollView scrollView = new ScrollView(getApplicationContext());
+                        TextView textView = new TextView(getApplicationContext());
+                        scrollView.addView(textView);
+                        textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        String text="Name: " + settings.new_pc[0];
+                        if (settings.new_pc[0].substring(0) == "i"){
+                            text = text + settings.processors.get("intel")[];
+                        }
+                    }
+                });
 
                 main_lt.addView(about);
                 main_lt.addView(replacement_btn);
