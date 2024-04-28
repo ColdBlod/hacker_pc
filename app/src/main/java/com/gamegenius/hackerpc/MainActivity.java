@@ -2,15 +2,11 @@ package com.gamegenius.hackerpc;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Random;
 
-import android.app.Application;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.view.Display;
@@ -1144,29 +1140,78 @@ public class MainActivity extends Activity {
 
     public void show_category(){
         LinearLayout main_lt = findViewById(R.id.showcase_layout);
+        main_lt.removeAllViews();
         if (settings.current_showcase == 0){
-            for (int i = 0;i < db.processors_inventory_len; i++){
-                if (db.processors[i][0] != null){
-                    ImageButton btn = new ImageButton(getApplicationContext());
-                    btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f));
-                    btn.setScaleType(ImageView.ScaleType.FIT_XY);
-                    btn.setBackgroundColor(getColor(R.color.spirit));
+            if (settings.new_pc[0] == null){
+                for (int i = 0; i < db.processors_inventory_len; i++) {
+                    if (db.processors[i][0] != null) {
+                        ImageButton btn = new ImageButton(getApplicationContext());
+                        btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f));
+                        btn.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        btn.setBackgroundColor(getColor(R.color.spirit));
 
-                    try {
-                        InputStream inputStream = getAssets().open("processors/" + db.processors[i][0] + ".png");
-                        Drawable drawable = Drawable.createFromStream(inputStream, db.processors[i][0]);
-                        btn.setImageDrawable(drawable);
-                        main_lt.addView(btn);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        try {
+                            InputStream inputStream = getAssets().open("processors/" + db.processors[i][0] + ".png");
+                            Drawable drawable = Drawable.createFromStream(inputStream, db.processors[i][0]);
+                            btn.setImageDrawable(drawable);
+
+                            int finalI = i;
+                            btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {accept_selcted_element(db.processors[finalI][0]);}});
+
+                            main_lt.addView(btn);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+
                 }
+                Button buy = new Button(getApplicationContext());
+                buy.setText("Buy a processor");
+                buy.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
+                main_lt.addView(buy);
+            } else {
+                ImageView img = new ImageView(getApplicationContext());
+                img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+                try{
+                    InputStream inputStream = getAssets().open("processors/" + settings.new_pc[0]);
+                    Drawable drawable = Drawable.createFromStream(inputStream, settings.new_pc[0]);
+                    img.setImageDrawable(drawable);
+
+                    main_lt.addView(img);
+                } catch (IOException e){e.printStackTrace();}
+
+                Button replacement_btn = new Button(getApplicationContext());
+                replacement_btn.setBackgroundColor(getColor(R.color.purple_200));
+                replacement_btn.setText("Replace");
+                replacement_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        settings.new_pc[0] = null;
+                        show_category();
+                        Button btn = findViewById(R.id.make_pc_processor);
+                        btn.setBackgroundColor(getColor(R.color.red));
+                    }
+                });
+
+                Button about = new Button(getApplicationContext());
+                about.setText("About");
+                about.setBackgroundColor(getColor(R.color.light_blue));
+
+                main_lt.addView(about);
+                main_lt.addView(replacement_btn);
 
             }
-            Button buy = new Button(getApplicationContext());
-            buy.setText("Buy a processor");
-            buy.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
-            main_lt.addView(buy);
+        }
+    }
+
+    public void accept_selcted_element(String name){
+        settings.new_pc[settings.current_showcase] = name;
+        if (settings.current_showcase == 0){
+            Button processors_btn = findViewById(R.id.make_pc_processor);
+            processors_btn.setBackgroundColor(getColor(R.color.green));
+            settings.current_showcase = 1;
+            show_category();
         }
     }
 

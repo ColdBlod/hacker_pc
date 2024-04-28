@@ -10,7 +10,7 @@ public class Settings {
     public HashMap<Integer, String[]> quests = new HashMap<>();
     boolean is_it_all = false, is_showed_answer_relationship = false, love_walk = false, magazine_is_back_btn_showed=false;
     public int how_many = 1, realutionship_age = 0, showed_learn = 0, all_pc_complect=0, showed_elements_magazine=0, showed_elements=0;
-    public String[] names = new String[10];
+    public String[] names = new String[10], new_pc = new String[8];
     public String[] jobs = new String[10];
     public int current_showcase=-1;
     public int[] showed_magazine_ls = new int[26];

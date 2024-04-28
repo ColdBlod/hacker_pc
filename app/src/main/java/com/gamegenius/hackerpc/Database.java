@@ -118,6 +118,7 @@ public class Database {
                 }
             } catch (IOException e){
                 FileWriter filewriter = new FileWriter(path + "/details.txt");
+                filewriter.write("0\ni3-1000G1");
                 filewriter.close();
             }
         } catch (Exception e) {
