@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/show_pc_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF0000"
+            android:text="back" />
+
+        <ImageView
+            android:id="@+id/show_pc_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            app:srcCompat="@drawable/black" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <TextView
+                android:id="@+id/show_pc_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="processor: core i9-11300FX\nmotherboard: ASRock H310CM-DVS\nram: Kingston ValueRAM x 4\nvideocard: GIGABYTE GeForce RTX 4070 AORUS MASTER 12G\ncooler: ID-COOLING SE-214-XT\ndisk1: ARDOR GAMING Ally AL1282\ndisk2: WD Ultrastar DC HA210\nAeroCool KCAS PLUS 700W\nDEXP AWS-DE7"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/chooese_langue_make_app_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF0000"
+        android:text="back" />
+
+    <Button
+        android:id="@+id/chooese_langue_make_app_clicks_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="clicks" />
+
+    <Button
+        android:id="@+id/chooese_langue_make_app_blocking_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="blocking" />
+</LinearLayout>

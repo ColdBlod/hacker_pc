@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">hacker pc</string>
+
+    <string-array name="jobs">
+        <item>Manager</item>
+        <item>Actor</item>
+        <item>Cook</item>
+        <item>Builder</item>
+        <item>Pilot</item>
+        <item>Programist</item>
+        <item>Teacher</item>
+        <item>Engineer</item>
+        <item>Policeman</item>
+        <item>Journalist</item>
+    </string-array>
+</resources>
+
