@@ -1224,7 +1224,12 @@ public class MainActivity extends Activity {
                         textView.setGravity(Gravity.CENTER_HORIZONTAL);
                         String text="Name: " + settings.new_pc[0];
                         if (settings.new_pc[0].substring(0) == "i"){
-                            text = text + settings.processors.get("intel")[];
+                            for (int i=0;i<settings.processors.get("intel").length;i++){
+                                if (settings.processors.get("intel")[i][0] == settings.new_pc[0]){
+                                    
+                                }
+                            }
+                            text = text + settings.processors.get("intel");
                         }
                     }
                 });
