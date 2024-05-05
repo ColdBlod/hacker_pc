@@ -38,13 +38,6 @@
             android:text="life" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/life_relationship"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="relationship❤" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -58,20 +51,7 @@
             android:layout_weight="1"
             android:text="computer💻" />
 
-        <Button
-            android:id="@+id/life_housing"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="housing🏡" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/life_transport"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="transport🚌" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,12 +66,6 @@
             android:layout_weight="1"
             android:text="pet🐈" />
 
-        <Button
-            android:id="@+id/life_learn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="education🏫" />
     </LinearLayout>
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import java.util.Random;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Vibrator;
 import android.view.Display;
@@ -241,10 +242,10 @@ public class MainActivity extends Activity {
         res = height/1280 * 1.55f;
         videoView.setScaleY(res);
 
-        videoView.setOnKeyListener(new View.OnKeyListener() {
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                return false;
+            public void onCompletion(MediaPlayer mp) {
+                videoView.start();
             }
         });
 
@@ -517,11 +518,11 @@ public class MainActivity extends Activity {
         Button life_magazine = findViewById(R.id.life_magazine);
         Button life_work = findViewById(R.id.life_work);
         Button life_pet = findViewById(R.id.life_pet);
-        Button realutionship = findViewById(R.id.life_relationship);
-        Button learn = findViewById(R.id.life_learn);
-        Button transport = findViewById(R.id.life_transport);
-        Button housing = findViewById(R.id.life_housing);
-        Button computer = findViewById(R.id.life_computer);
+        //Button realutionship = findViewById(R.id.life_relationship);
+        //Button learn = findViewById(R.id.life_learn);
+        //Button transport = findViewById(R.id.life_transport);
+        //Button housing = findViewById(R.id.life_housing);
+        //Button computer = findViewById(R.id.life_computer);
         //end
 
         life_profile.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.main_activity);ini_profile();}});
@@ -532,13 +533,13 @@ public class MainActivity extends Activity {
 
         life_pet.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {if (db.life_zoo == null){setContentView(R.layout.choose_pet_activity);choose_pet();}else {setContentView(R.layout.pet_normal_activity);normal_pet();}}});
 
-        realutionship.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {if (db.partners_name == null){setContentView(R.layout.resolutionship_choose_activity);choose_realationship();}else {setContentView(R.layout.normal_relationship);normal_relationship();}}});
+        //realutionship.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {if (db.partners_name == null){setContentView(R.layout.resolutionship_choose_activity);choose_realationship();}else {setContentView(R.layout.normal_relationship);normal_relationship();}}});
 
-        learn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.learn_activity);learn_ini();}});
+        //learn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.learn_activity);learn_ini();}});
 
-        housing.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.housing_activity);housing_ini();}});
+        //housing.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.housing_activity);housing_ini();}});
 
-        computer.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.inventory_pc);inventory_pc();}});
+        //computer.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.inventory_pc);inventory_pc();}});
     }
 
     // house
@@ -1135,6 +1136,7 @@ public class MainActivity extends Activity {
         settings.current_showcase = 0;
 
         processor.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {settings.current_showcase = 0;show_category();}});
+        motherboard.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {settings.current_showcase = 1;show_category();}});
 
         back.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.inventory_pc);inventory_pc();}});
 
@@ -1233,7 +1235,15 @@ public class MainActivity extends Activity {
                                 text = text + settings.processors.get("intel")[i][8] + "\nProcessor quality: ";
                                 text = text + settings.processors.get("intel")[i][9] + "\nMax operative memory: ";
                                 text = text + settings.processors.get("intel")[i][10] + "\nMax operative frequency: ";
-                                text = text + settings.processors.get("intel")[i][11] + "\n";
+                                text = text + settings.processors.get("intel")[i][11] + "\nHeat generation: ";
+                                text = text + settings.processors.get("intel")[i][13] + "\nMax temperature: ";
+                                text = text + settings.processors.get("intel")[i][14];
+                                if (settings.string_checker(settings.processors.get("intel")[i][15], "")){
+                                    text = text + "\nGraphic model: " + settings.processors.get("intel")[i][15];
+                                    text = text + "\nGraphic's frequency: " + settings.processors.get("intel")[i][16];
+                                }
+                                text = text + "\nVirtualization: " + settings.processors.get("intel")[i][17];
+                                text = text + "\nYear of issue: " + settings.processors.get("intel")[i][18];
                             }
                         }
 
@@ -1245,6 +1255,27 @@ public class MainActivity extends Activity {
                 main_lt.addView(about);
                 main_lt.addView(replacement_btn);
 
+            }
+        }
+        else if (settings.current_showcase == 1){
+            if (settings.new_pc[1] == null){
+                for (int i=0;i<db.motherboard_inventory_len;i++){
+                    ImageButton btn = new ImageButton(getApplicationContext());
+                    btn.setBackgroundColor(getColor(R.color.spirit));
+                    btn.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    btn.setScaleType(ImageView.ScaleType.FIT_END);
+                    try {
+                        InputStream inputStream = getAssets().open("motherboards/" + db.motherboards[i][0]);
+                        Drawable drawable = Drawable.createFromStream(inputStream, db.motherboards[i][0]);
+                        btn.setImageDrawable(drawable);
+
+                        main_lt.addView(btn);
+                    } catch (IOException e){e.printStackTrace();}
+                }
+                Button btn = new Button(getApplicationContext());
+                btn.setText("Buy motherboard");
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
+                main_lt.addView(btn);
             }
         }
     }
@@ -1296,5 +1327,6 @@ public class MainActivity extends Activity {
         text += "casee: " + casee;
 
         textView.setText(text);
+        textView.setTextColor(getColor(R.color.black));
     }
 }

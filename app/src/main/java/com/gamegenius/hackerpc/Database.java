@@ -114,11 +114,26 @@ public class Database {
                     } else if (mod == 2){
                         ram_inventory_len += 1;
                         rams[ram_inventory_len-1] = text.split(";");
+                    } else if (mod == 3){
+                        cases_inventory_len += 1;
+                        cases[cases_inventory_len-1] = text.split(";");
+                    } else if (mod == 4) {
+                        psus_inventory_len += 1;
+                        psus[psus_inventory_len-1] = text.split(";");
+                    } else if (mod == 5) {
+                        disks_inventory_len += 1;
+                        disks[disks_inventory_len-1] = text.split(";");
+                    } else if (mod == 6) {
+                        coolers_inventory_len += 1;
+                        coolers[coolers_inventory_len-1] = text.split(";");
+                    } else if (mod == 7) {
+                        videocards_inventory_len += 1;
+                        videocards[videocards_inventory_len-1] = text.split(";");
                     }
                 }
             } catch (IOException e){
                 FileWriter filewriter = new FileWriter(path + "/details.txt");
-                filewriter.write("0\ni3-1000G1");
+                filewriter.write("0\ni3-1000G1\n1\nASRock Z590 Pro 4\n2\nKingston ValueRAM\n");
                 filewriter.close();
             }
         } catch (Exception e) {
