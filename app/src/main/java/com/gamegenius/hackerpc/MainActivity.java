@@ -1175,7 +1175,6 @@ public class MainActivity extends Activity {
             } else {
                 ImageView img = new ImageView(getApplicationContext());
                 img.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                System.out.println("processors/" + settings.new_pc[0] + ".png");
                 try{
                     InputStream inputStream = getAssets().open("processors/" + settings.new_pc[0] + ".png");
                     Drawable drawable = Drawable.createFromStream(inputStream, settings.new_pc[0]);
@@ -1222,15 +1221,24 @@ public class MainActivity extends Activity {
                         TextView textView = new TextView(getApplicationContext());
                         scrollView.addView(textView);
                         textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                        String text="Name: " + settings.new_pc[0];
-                        if (settings.new_pc[0].substring(0) == "i"){
-                            for (int i=0;i<settings.processors.get("intel").length;i++){
-                                if (settings.processors.get("intel")[i][0] == settings.new_pc[0]){
-                                    
-                                }
+                        String text="Name: " + settings.new_pc[0] + "\nCores: ";
+                        for (int i=0;i<settings.processors.get("intel").length;i++){
+                            if (settings.string_checker(settings.processors.get("intel")[i][0], settings.new_pc[0])){
+                                text = text + settings.processors.get("intel")[i][2] + "\nPotocs: ";
+                                text = text + settings.processors.get("intel")[i][3] + "\nEcocores: ";
+                                text = text + settings.processors.get("intel")[i][4] + "\nL2 cache: ";
+                                text = text + settings.processors.get("intel")[i][5] + "\nL3 cache: ";
+                                text = text + settings.processors.get("intel")[i][6] + "\nThickness: ";
+                                text = text + settings.processors.get("intel")[i][7] + "\nCore type: ";
+                                text = text + settings.processors.get("intel")[i][8] + "\nProcessor quality: ";
+                                text = text + settings.processors.get("intel")[i][9] + "\nMax operative memory: ";
+                                text = text + settings.processors.get("intel")[i][10] + "\nMax operative frequency: ";
+                                text = text + settings.processors.get("intel")[i][11] + "\n";
                             }
-                            text = text + settings.processors.get("intel");
                         }
+
+                        textView.setText(text);
+                        main_lt.addView(scrollView);
                     }
                 });
 
