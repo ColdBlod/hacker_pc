@@ -104,21 +104,21 @@ public class Settings {
         // оперативка
 
         String[] ram = new String[6];
-        // {price, year, memory_type, max_memory, memory_timings, memory_frequency}
+        // {price, year, memory_type, max_memory, memory_timings, memory_frequency, id}
         // копировать от сюда
-        ram = new String[]{"3490", "2016", "DDR4", "4", "22-22-22-32", "3200"};
+        ram = new String[]{"3490", "2016", "DDR4", "4", "22-22-22-32", "3200", "0"};
         rams.put("Kingston ValueRAM", ram); // замени name на название оперативки
-        ram = new String[]{"3090", "2016", "DDR4", "8", "19-19-19-19", "2666"};
+        ram = new String[]{"3090", "2016", "DDR4", "8", "19-19-19-19", "2666", "1"};
         rams.put("Silicon Power", ram); // замени name на название оперативки
-        ram = new String[]{"3390", "2016", "DDR4", "16", "22-22-22-22", "3200"};
+        ram = new String[]{"3390", "2016", "DDR4", "16", "22-22-22-22", "3200", "2"};
         rams.put("Foxline", ram); // замени name на название оперативки
-        ram = new String[]{"3790", "2017", "DDR4", "32", "20-26-26-46", "3600"};
+        ram = new String[]{"3790", "2017", "DDR4", "32", "20-26-26-46", "3600", "3"};
         rams.put("Patriot Viper Elite II", ram); // замени name на название оперативки
-        ram = new String[]{"6990", "2023", "DDR5", "8", "40-40-40", "4800"};
+        ram = new String[]{"6990", "2023", "DDR5", "8", "40-40-40", "4800", "4"};
         rams.put("Samsung", ram); // замени name на название оперативки
-        ram = new String[]{"6990", "2023", "DDR5", "16", "46-45-45", "5600"};
+        ram = new String[]{"6990", "2023", "DDR5", "16", "46-45-45", "5600", "5"};
         rams.put("ADATA XPG Lancer Blade", ram); // замени name на название оперативки
-        ram = new String[]{"8990", "2024", "DDR5", "32", "30-40-40", "6000"};
+        ram = new String[]{"8990", "2024", "DDR5", "32", "30-40-40", "6000", "6"};
         rams.put("ADATA XPG Lancer", ram); // замени name на название оперативки
         // до сюда
     }

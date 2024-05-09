@@ -133,7 +133,7 @@ public class Database {
                 }
             } catch (IOException e){
                 FileWriter filewriter = new FileWriter(path + "/details.txt");
-                filewriter.write("0\nIntel Core i3-9100F\n1\nASRock Z590 Pro 4\n2\nKingston ValueRAM 2\n3\nDEXP DC-302B\n4\nAeroCool VX PLUS 350W\n5\nWD Blue 512gb\n6\nDEEPCOOL Theta 9\n7\nRTX 4090 VENTUS 3X\n");
+                filewriter.write("0\nIntel Core i3-9100F\n1\nASRock Z590 Pro 4\n2\nSilicon Power 2\n3\nDEXP DC-302B\n4\nAeroCool VX PLUS 350W\n5\nWD Blue 512gb\n6\nDEEPCOOL Theta 9\n7\nRTX 4090 VENTUS 3X\n");
                 filewriter.close();
             }
         } catch (Exception e) {
@@ -221,5 +221,15 @@ public class Database {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    protected void remove_ram_element(int number){
+        for (int i=0;i<6-number;i++){
+            if (number+i+1 < 7){
+                rams[number+i] = rams[number+i+1];
+            }
+        }
+        rams[6] = new String[]{""};
+        ram_inventory_len -= 1;
     }
 }

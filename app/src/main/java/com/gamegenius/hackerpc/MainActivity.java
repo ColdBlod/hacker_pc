@@ -1136,6 +1136,19 @@ public class MainActivity extends Activity {
 
         settings.current_showcase = 0;
 
+        for (int i=0;i<8;i++){
+            if (settings.new_pc[i] != null){
+                if (i == 0) findViewById(R.id.make_pc_processor).setBackgroundColor(getColor(R.color.green));
+                if (i == 1) findViewById(R.id.make_pc_motherboard).setBackgroundColor(getColor(R.color.green));
+                if (i == 2) findViewById(R.id.make_pc_ram).setBackgroundColor(getColor(R.color.green));
+                if (i == 3) findViewById(R.id.make_pc_disks).setBackgroundColor(getColor(R.color.green));
+                if (i == 4) findViewById(R.id.make_pc_cooler).setBackgroundColor(getColor(R.color.green));
+                if (i == 5) findViewById(R.id.make_pc_psu).setBackgroundColor(getColor(R.color.green));
+                if (i == 6) findViewById(R.id.make_pc_videocard).setBackgroundColor(getColor(R.color.green));
+                if (i == 7) findViewById(R.id.make_pc_case).setBackgroundColor(getColor(R.color.green));
+            }
+        }
+
         processor.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {settings.current_showcase = 0;show_category();}});
         motherboard.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {settings.current_showcase = 1;show_category();}});
         ram.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {settings.current_showcase = 2;show_category();}});
@@ -1415,53 +1428,13 @@ public class MainActivity extends Activity {
             }
         } else if (settings.current_showcase == 2){
             if (settings.new_pc[2] == null){
-                for (int i=0;i<db.ram_inventory_len;i++){
-                    ImageButton btn = new ImageButton(getApplicationContext());
-                    btn.setBackgroundColor(getColor(R.color.spirit));
-                    btn.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                    btn.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    String[] a = settings.find_the_name_of_ram(db.rams[i][0]);
-                    String ram=a[0];
-                    int kol = Integer.parseInt(a[1]);
-
-                    try {
-                        InputStream inputStream = getAssets().open("rams/" + ram + ".png");
-                        Drawable drawable = Drawable.createFromStream(inputStream, ram);
-                        btn.setImageDrawable(drawable);
-
-                        btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {settings.new_pc[2] = ram;settings.current_showcase=3;show_category();Button btn = findViewById(R.id.make_pc_ram);btn.setBackgroundColor(getColor(R.color.green));}});
-
-                        TextView tx = new TextView(getApplicationContext());
-                        tx.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 2.0f));
-                        tx.setText(db.rams[i][0]);
-                        tx.setTextColor(getColor(R.color.black));
-                        tx.setGravity(Gravity.CENTER);
-                        LinearLayout home_ly = new LinearLayout(getApplicationContext());
-                        home_ly.setOrientation(LinearLayout.VERTICAL);
-                        home_ly.addView(tx);
-                        home_ly.addView(btn);
-                        main_lt.addView(home_ly);
-
-                        TextView background = new TextView(getApplicationContext());
-                        background.setBackgroundColor(getColor(R.color.black));
-                        background.setText("");
-                        background.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 10));
-
-                        main_lt.addView(background);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Button btn = new Button(getApplicationContext());
-                btn.setText("Buy RAM");
-                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
-                main_lt.addView(btn);
+                add_ram();
             }
             else {
                 ImageView img = new ImageView(getApplicationContext());
                 img.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 try{
-                    InputStream inputStream = getAssets().open("rams/" + settings.new_pc[2] + ".png");
+                    InputStream inputStream = getAssets().open("rams/" + settings.find_the_name_of_ram(settings.new_pc[2])[0] + ".png");
                     Drawable drawable = Drawable.createFromStream(inputStream, settings.new_pc[2]);
                     img.setImageDrawable(drawable);
 
@@ -1480,6 +1453,13 @@ public class MainActivity extends Activity {
                         btn.setBackgroundColor(getColor(R.color.red));
                     }
                 });
+
+                Button add_btn = new Button(getApplicationContext());
+                add_btn.setText("add ram");
+                add_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {
+                    main_lt.removeAllViews();
+                    add_ram();
+                }});
 
                 Button about = new Button(getApplicationContext());
                 about.setText("About");
@@ -1507,23 +1487,27 @@ public class MainActivity extends Activity {
                         scrollView.addView(textView);
                         textView.setGravity(Gravity.CENTER_HORIZONTAL);
                         textView.setTextColor(getColor(R.color.black));
-
-                        String text="Name: " + settings.new_pc[2] + "\nPrice: ";
-                        text = text + settings.rams.get(settings.new_pc[2])[0] + "\nYear: ";
-                        text = text + settings.rams.get(settings.new_pc[2])[1] + "\nRAM type: ";
-                        text = text + settings.rams.get(settings.new_pc[2])[2] + "\nRAM value: ";
-                        text = text + settings.rams.get(settings.new_pc[2])[3] + "\nRAM timings: ";
-                        text = text + settings.rams.get(settings.new_pc[2])[4] + "\nRAM frequency: ";
-                        text = text + settings.rams.get(settings.new_pc[2])[5];
+                        String ram = settings.find_the_name_of_ram(settings.new_pc[2])[0];
+                        String kol = settings.find_the_name_of_ram(settings.new_pc[2])[1];
+                        String text="Name: " + ram + " x" + kol + "\nPrice: ";
+                        text = text + settings.rams.get(ram)[0] + "$\nYear: ";
+                        text = text + settings.rams.get(ram)[1] + "\nRAM type: ";
+                        text = text + settings.rams.get(ram)[2] + "\nRAM value: ";
+                        text = text + settings.rams.get(ram)[3] + "\nRAM timings: ";
+                        text = text + settings.rams.get(ram)[4] + "\nRAM frequency: ";
+                        text = text + settings.rams.get(ram)[5];
 
                         textView.setText(text);
                         main_lt.addView(scrollView);
                         main_lt.addView(replacement_btn);
+                        main_lt.addView(add_btn);
                     }
                 });
 
                 main_lt.addView(about);
                 main_lt.addView(replacement_btn);
+                main_lt.addView(add_btn);
+
             }
         } else if (settings.current_showcase == 3){
             if (settings.new_pc[3] == null){
@@ -1873,6 +1857,9 @@ public class MainActivity extends Activity {
                         Drawable drawable = Drawable.createFromStream(inputStream, db.videocards[i][0]);
                         btn.setImageDrawable(drawable);
 
+                        int finalI = i;
+                        btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {settings.new_pc[6] = db.videocards[finalI][0];settings.current_showcase = 7;show_category();Button btn = findViewById(R.id.make_pc_videocard);btn.setBackgroundColor(getColor(R.color.green));}});
+
                         TextView tx = new TextView(getApplicationContext());
                         tx.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 2.0f));
                         tx.setText(db.videocards[i][0]);
@@ -1899,9 +1886,134 @@ public class MainActivity extends Activity {
                 btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
                 main_lt.addView(btn);
             }
+            else {
+                ImageView img = new ImageView(getApplicationContext());
+                img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                try {
+                    InputStream inputStream = getAssets().open("videocards/" + settings.new_pc[6] + ".png");
+                    Drawable drawable = Drawable.createFromStream(inputStream, settings.new_pc[6]);
+                    img.setImageDrawable(drawable);
+
+                    main_lt.addView(img);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Button replacement_btn = new Button(getApplicationContext());
+                replacement_btn.setBackgroundColor(getColor(R.color.purple_200));
+                replacement_btn.setText("Replace");
+                replacement_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        settings.new_pc[6] = null;
+                        show_category();
+                        Button btn = findViewById(R.id.make_pc_videocard);
+                        btn.setBackgroundColor(getColor(R.color.red));
+                    }
+                });
+
+                Button about = new Button(getApplicationContext());
+                about.setText("About");
+                about.setBackgroundColor(getColor(R.color.light_blue));
+                about.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        main_lt.removeAllViews();
+                        main_lt.addView(img);
+                        Button back_btn = new Button(getApplicationContext());
+                        back_btn.setText("Back");
+                        back_btn.setBackgroundColor(getColor(R.color.red));
+                        back_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                main_lt.removeAllViews();
+                                main_lt.addView(img);
+                                main_lt.addView(about);
+                                main_lt.addView(replacement_btn);
+                            }
+                        });
+
+                        ScrollView scrollView = new ScrollView(getApplicationContext());
+                        TextView textView = new TextView(getApplicationContext());
+                        scrollView.addView(textView);
+                        textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textView.setTextColor(getColor(R.color.black));
+
+                        String text = "Name: " + settings.new_pc[6] + "\nPrice: ";
+                        text = text + settings.videocards.get(settings.new_pc[6])[0] + "$\nYear: ";
+                        text = text + settings.videocards.get(settings.new_pc[6])[1] + "\nMemory type: ";
+                        text = text + settings.videocards.get(settings.new_pc[6])[2] + "\nMemory: ";
+                        text = text + settings.videocards.get(settings.new_pc[6])[3] + "\nMemory bus: ";
+                        text = text + settings.videocards.get(settings.new_pc[6])[4] + "\nMemory frequency: ";
+                        text = text + settings.videocards.get(settings.new_pc[6])[5] + "\nTDP: ";
+                        text = text + settings.videocards.get(settings.new_pc[6])[6];
+
+                        textView.setText(text);
+                        main_lt.addView(scrollView);
+                        main_lt.addView(replacement_btn);
+                    }
+                });
+
+                main_lt.addView(about);
+                main_lt.addView(replacement_btn);
+            }
         }
     }
+    public void add_ram(){
+        LinearLayout main_lt = findViewById(R.id.showcase_layout);
+        for (int i=0;i<db.ram_inventory_len;i++){
+            ImageButton btn = new ImageButton(getApplicationContext());
+            btn.setBackgroundColor(getColor(R.color.spirit));
+            btn.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            btn.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            String[] a = settings.find_the_name_of_ram(db.rams[i][0]);
+            String ram=a[0];
+            int kol = Integer.parseInt(a[1]);
 
+            try {
+                InputStream inputStream = getAssets().open("rams/" + ram + ".png");
+                Drawable drawable = Drawable.createFromStream(inputStream, ram);
+                btn.setImageDrawable(drawable);
+
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {
+                    if (settings.new_pc[2] == null) settings.new_pc[2] = ram + " 1";
+                    else if (settings.find_the_name_of_ram(settings.new_pc[2])[0] == ram) {
+                        String[] a = settings.find_the_name_of_ram(settings.new_pc[2]);
+                        int kol = Integer.parseInt(a[1]);
+                        settings.new_pc[2] = a[0] + " " + (kol+1);
+                    };
+                    settings.current_showcase=3;show_category();Button btn = findViewById(R.id.make_pc_ram);btn.setBackgroundColor(getColor(R.color.green));}});
+
+                TextView tx = new TextView(getApplicationContext());
+                tx.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 2.0f));
+                tx.setText(db.rams[i][0]);
+                tx.setTextColor(getColor(R.color.black));
+                tx.setGravity(Gravity.CENTER);
+                LinearLayout home_ly = new LinearLayout(getApplicationContext());
+                home_ly.setOrientation(LinearLayout.VERTICAL);
+                home_ly.addView(tx);
+                home_ly.addView(btn);
+                main_lt.addView(home_ly);
+
+                TextView background = new TextView(getApplicationContext());
+                background.setBackgroundColor(getColor(R.color.black));
+                background.setText("");
+                background.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 10));
+
+                main_lt.addView(background);
+
+                kol -= 1;
+                if (kol > 0) db.rams[i][0] = ram + " " + kol;
+                else db.remove_ram_element(Integer.parseInt(settings.rams.get(ram)[6]));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Button btn = new Button(getApplicationContext());
+        btn.setText("Buy RAM");
+        btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
+        main_lt.addView(btn);
+    }
     public void accept_selcted_element(String name){
         settings.new_pc[settings.current_showcase] = name;
         if (settings.current_showcase == 0){
