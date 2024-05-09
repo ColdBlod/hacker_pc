@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Vibrator;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -81,6 +80,7 @@ public class MainActivity extends Activity {
         settings.jobs_pr = new ArrayAdapter(this, R.layout.filter_activity, settings.jobs);
 
         // inizializating elements
+
         setContentView(R.layout.main_activity);
         ini_profile();
     }
