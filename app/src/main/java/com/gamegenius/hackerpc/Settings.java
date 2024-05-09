@@ -177,7 +177,7 @@ public class Settings {
         // кулеры
 
         String[] culer = new String[4];
-
+        // {price, sockets, speed, heat_dissipation}
         // копировать от сюда
         culer = new String[]{"890", "LGA 1150, LGA 1151, LGA 1151-v2, LGA 1155, LGA 1156, LGA 1200", "2000", "82"};
         culers.put("DEEPCOOL Theta 9", culer); // замени name на название кулера
@@ -226,29 +226,29 @@ public class Settings {
 
         disks.put("ssd", ssd);
         disks.put("hdd", hdd);
-        disks.put("m2", m2);
+        disks.put("m.2", m2);
     }
 
     private void psu_make(){
         // блоки питания
 
         String[] psu = new String[5];
-        // {price, cpu_pins, PCI-E, power}
+        // {price, main_power_connector, cpu_pins, PCI-E, power}
         // PCI-E = "connector1+connector2+..+connector_n quality_of_pins"
         // копировать от сюда
-        psu = new String[]{"1999", "4+4", "-", "350"};
+        psu = new String[]{"1999", "20+4", "4+4", "-", "350"};
         psus.put("AeroCool VX PLUS 350W", psu); // замени name на название блока
-        psu = new String[]{"2899", "4+4", "6+2 2", "350"};
+        psu = new String[]{"2899", "20+4", "4+4", "6+2 x2", "350"};
         psus.put("DEEPCOOL PF350", psu); // замени name на название блока
-        psu = new String[]{"4999", "4+4", "6+2 2", "700"};
+        psu = new String[]{"4999", "24", "4+4", "6+2 x2", "700"};
         psus.put("FSP PNR PRO 700W", psu); // замени name на название блока
-        psu = new String[]{"5499", "4+4", "6+2 2", "700"};
+        psu = new String[]{"5499", "20+4", "4+4", "6+2 x2", "700"};
         psus.put("AeroCool KCAS PLUS 700W", psu); // замени name на название блока
-        psu = new String[]{"7699", "4+4", "6+2 2", "550"};
+        psu = new String[]{"7699", "20+4", "4+4", "6+2 x2", "550"};
         psus.put("SYSTEM POWER 10 550W", psu); // замени name на название блокa
-        psu = new String[]{"12399", "4+4", "6+2 2", "650"};
+        psu = new String[]{"12399", "20+4", "4+4", "6+2 x2", "650"};
         psus.put("Pure Power 12 M 650W", psu); // замени name на название блока
-        psu = new String[]{"34799", "4+4", "6+2 2", "1000"};
+        psu = new String[]{"34799", "20+4", "4+4", "6+2 x2", "1000"};
         psus.put("DARK POWER 13 1000W", psu); // замени name на название блока
         // до сюда не включительно
 
@@ -262,13 +262,13 @@ public class Settings {
             // копировать от сюда
             casee = new String[]{"1499", "Micro-ATX"};
             cases.put("DEXP DC-302B", casee);
-            casee = new String[]{"1999", "Micro-ATX"};
+            casee = new String[]{"1999", "Standart-ATX"};
             cases.put("DEXP AWS-DE7", casee);
-            casee = new String[]{"2590", "Micro-ATX"};
+            casee = new String[]{"2590", "E-ATX"};
             cases.put("AeroCool Bolt", casee);
-            casee = new String[]{"3099", "Micro-ATX"};
+            casee = new String[]{"3099", "not-standart"};
             cases.put("AeroCool Aero One", casee);
-            casee = new String[]{"5890", "Micro-ATX"};
+            casee = new String[]{"5890", "micro-ATX"};
             cases.put("ZALMAN S4 PLUS", casee);
                 // до сюда не включительно
         }
@@ -280,7 +280,7 @@ public class Settings {
         String[][] lga1151 = new String[1][8];
 
         // от сюда можно копировать
-        motherb = new String[]{"ASRock H110 Pro BTC+", "15399", "2017", "Standart-ATX", "DDR4", "2", "32", "2400", "1", "4", "4", "2", "0", "24", "true"};
+        motherb = new String[]{"ASRock H110 Pro BTC+", "15399", "2017", "Standart-ATX", "DDR4", "2", "32", "DDR4:2400", "1", "4", "4", "2", "0", "24", "true"};
 
         lga1151[0] = motherb; // замени i на индекс материнки они начинаются с 0
         // до сюда не включая
@@ -288,41 +288,41 @@ public class Settings {
         String[][] lga1151v2 = new String[2][8];
 
         // от сюда можно копировать
-        motherb = new String[]{"ASRock H310CM-DVS", "4499", "2018", "micro-ATX", "DDR4", "2", "32", "2666", "0", "4", "1", "1", "0", "24", "false"};
+        motherb = new String[]{"ASRock H310CM-DVS", "4499", "2018", "micro-ATX", "DDR4", "2", "32", "DDR4:2666", "0", "4", "1", "1", "0", "24", "false"};
         lga1151v2[0] = motherb; // замени i на индекс материнки они начинаются с 0
-        motherb = new String[]{"ASRock H370M-HDV", "5599", "2020", "micro-ATX", "DDR4", "2", "64", "2666", "0", "4", "1", "1", "0", "24", "false"};
+        motherb = new String[]{"ASRock H370M-HDV", "5599", "2020", "micro-ATX", "DDR4", "2", "64", "DDR4:2666", "0", "4", "1", "1", "0", "24", "false"};
         lga1151v2[1] = motherb; // замени i на индекс материнки они начинаются с 0
         // до сюда не включая
 
         String[][] lga1200 = new String[9][8];
-        // {name, price, year, factor, operative_memory_types, operative_slots, max_operative, operative_quality, m.2, sata, usb2, usb3m usb-c, nutrition, lights}
+        // {name, price, year, factor, operative_memory_types, operative_slots, max_operative, operative_quality, m.2, sata, usb2, usb3, usb-c, nutrition, lights}
         // от сюда можно копировать
-        motherb = new String[]{"ASRock H470M-HDV", "6999", "2021", "micro-ATX", "DDR4", "2", "64", "2933", "0", "4", "4", "2", "0", "24", "false"};
+        motherb = new String[]{"ASRock H470M-HDV", "6999", "2021", "micro-ATX", "DDR4", "2", "64", "DDR4:2933", "0", "4", "4", "2", "0", "24", "false"};
         lga1200[0] = motherb; // замени i на индекс материнки они начинаются с 0
-        motherb = new String[]{"ASRock B560M-HDV", "6999", "2023", "micro-ATX", "DDR4", "2", "64", "3200", "1", "4", "4", "2", "0", "24", "false"};
+        motherb = new String[]{"ASRock B560M-HDV", "6999", "2023", "micro-ATX", "DDR4", "2", "64", "DDR4:3200", "1", "4", "4", "2", "0", "24", "false"};
         lga1200[1] = motherb;
-        motherb = new String[]{"ASRock B560 Steel Legend", "8299", "2021", "Standart-ATX", "DDR4", "4", "128", "3200", "3", "6", "2", "4", "1", "24", "true"};
+        motherb = new String[]{"ASRock B560 Steel Legend", "8299", "2021", "Standart-ATX", "DDR4", "4", "128", "DDR4:3200", "3", "6", "2", "4", "1", "24", "true"};
         lga1200[2] = motherb;
-        motherb = new String[]{"ASRock Z590 Pro 4", "11599", "2021", "Standart-ATX", "DDR4", "4", "128", "3200", "3", "6", "2", "2", "1", "24", "true"};
+        motherb = new String[]{"ASRock Z590 Pro 4", "11599", "2021", "Standart-ATX", "DDR4", "4", "128", "DDR4:3200", "3", "6", "2", "2", "1", "24", "true"};
         lga1200[3] = motherb;
-        motherb = new String[]{"ASRock H510 Pro BTC+", "12499", "2021", "not-standart", "DDR4", "1", "32", "3200", "1", "1", "2", "2", "0", "24", "false"};
+        motherb = new String[]{"ASRock H510 Pro BTC+", "12499", "2021", "not-standart", "DDR4", "1", "32", "DDR4:3200", "1", "1", "2", "2", "0", "24", "false"};
         lga1200[4] = motherb;
-        motherb = new String[]{"ASRock Z590 OX Formula", "22999", "2021", "E-ATX", "DDR4", "2", "64", "3200", "3", "8", "4", "2", "1", "24", "true"};
+        motherb = new String[]{"ASRock Z590 OX Formula", "22999", "2021", "E-ATX", "DDR4", "2", "64", "DDR4:3200", "3", "8", "4", "2", "1", "24", "true"};
         lga1200[5] = motherb;
-        motherb = new String[]{"ASRock Z490 AQUA", "50499", "2020", "E-ATX", "DDR4", "4", "128", "2933", "4", "8", "1", "2", "1", "24", "true"};
+        motherb = new String[]{"ASRock Z490 AQUA", "50499", "2020", "E-ATX", "DDR4", "4", "128", "DDR4:2933", "4", "8", "1", "2", "1", "24", "true"};
         lga1200[6] = motherb;
-        motherb = new String[]{"ASRock H510-HDV/M.2 SE", "6799", "2020", "micro-ATX", "DDR4", "2", "64", "3200", "1", "4", "2", "4", "0", "24", "false"};
+        motherb = new String[]{"ASRock H510-HDV/M.2 SE", "6799", "2020", "micro-ATX", "DDR4", "2", "64", "DDR4:3200", "1", "4", "2", "4", "0", "24", "false"};
         lga1200[7] = motherb;
         String[][] lga1700 = new String[4][8];
 
         // от сюда можно копировать
-        motherb = new String[]{"ASRock H610-HVS", "7099", "2022", "micro-ATX", "DDR4", "2", "64", "3200", "0", "4", "1", "1", "0", "24", "false"};
+        motherb = new String[]{"ASRock H610-HVS", "7099", "2022", "micro-ATX", "DDR4", "2", "64", "DDR4:3200", "0", "4", "1", "1", "0", "24", "false"};
         lga1700[0] = motherb; // замени i на индекс материнки они начинаются с 0
-        motherb = new String[]{"ASRock B760M PG Lightning", "13999", "2023", "micro-ATX", "DDDR4", "4", "192", "4800", "1", "2", "2", "3", "1", "24", "false"};
+        motherb = new String[]{"ASRock B760M PG Lightning", "13999", "2023", "micro-ATX", "DDDR4", "4", "192", "DDR4:4800", "1", "2", "2", "3", "1", "24", "false"};
         lga1700[1] = motherb; // замени i на индекс материнки они начинаются с 0
-        motherb = new String[]{"MSI PRO Z790-P WIFI", "25990", "2023", "micro-ATX", "DDR5", "4", "192", "5600", "2", "sata", "4", "3", "1", "24", "false"};
+        motherb = new String[]{"MSI PRO Z790-P WIFI", "25990", "2023", "micro-ATX", "DDR5", "4", "192", "DDR5:5600", "2", "sata", "4", "3", "1", "24", "false"};
         lga1700[2] = motherb; // замени i на индекс материнки они начинаются с 0
-        motherb = new String[]{"ASUS TUF GAMING B660M-PLUS WIFI D4", "10990", "2023", "micro-ATX", "DDR4", "4", "192", "3200", "2", "4", "2", "5", "1", "24", "false"};
+        motherb = new String[]{"ASUS TUF GAMING B660M-PLUS WIFI D4", "10990", "2023", "micro-ATX", "DDR4", "4", "192", "DDR4:3200", "2", "4", "2", "5", "1", "24", "false"};
         lga1700[3] = motherb; // замени i на индекс материнки они начинаются с 0
         // до сюда не включая
 
@@ -449,5 +449,17 @@ public class Settings {
                 answer = false;
             }
             return answer;
+        }
+
+        protected String[] find_the_name_of_ram(String ram){
+            String name="", number="";
+            for (int i=0;i<ram.length();i++){
+                if (ram.charAt(ram.length()-1-i) == ' '){
+                    name = ram.substring(0, ram.length()-1-i);
+                    number = ram.substring(ram.length()-i, ram.length());
+                    break;
+                }
+            }
+            return new String[]{name, number};
         }
 }
