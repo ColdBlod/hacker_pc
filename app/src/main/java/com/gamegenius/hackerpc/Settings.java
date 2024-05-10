@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Settings {
     public HashMap<Integer, String[]> quests = new HashMap<>();
     boolean is_it_all = false, is_showed_answer_relationship = false, love_walk = false, magazine_is_back_btn_showed=false;
-    public int how_many = 1, realutionship_age = 0, showed_learn = 0, all_pc_complect=0, showed_elements_magazine=0, showed_elements=0;
+    public int how_many = 1, realutionship_age = 0, showed_learn = 0, all_pc_complect=0, showed_elements_magazine=0, showed_elements=0, was_len=0;
     public String[] names = new String[10], new_pc = new String[8];
     public String[] jobs = new String[10];
     public int current_showcase=-1;
@@ -17,8 +17,8 @@ public class Settings {
     public HashMap<String, String[]> pets = new HashMap();
     public String[] list_of_pets = new String[]{"cat", "dog", "gui na pig", "marmot", "weasel", "mouses", "bird", "fishes"}, housing_house=new String[]{"dormitory", "studio", "one-room apartment", "kopeck piece", "three bedroom apartment", "villa", "personal island"};
     public ArrayAdapter jobs_pr;
-    public String[] processors_keys=new String[]{"intel", "amd"}, motherboards_keys=new String[]{"lga1151", "lga1151-v2", "lga1200", "lga1700"}, disks_keys=new String[]{"ssd", "hdd"};
-    public HashMap<String, String[][]> disks = new HashMap<>();
+    public String[] was = new String[250];
+    public HashMap<String, String[]> disks = new HashMap<>();
     public HashMap<String, String[]> psus = new HashMap<>();
     public HashMap<String, String[]> cases = new HashMap<>();
     public HashMap<String, String[][]> processors = new HashMap<>();
@@ -200,33 +200,29 @@ public class Settings {
         String[][] ssd = new String[2][5];
 
         String[][] hdd = new String[6][5];
-        // {name, price, port, memory}
+        // {price, port, memory}
         // копировать от сюда
-        disk = new String[]{"WD Blue 512gb", "500", "sata3", "512", "7200"};
-        hdd[0] = disk;
-        disk = new String[]{"WD Blue 1tb", "1000", "sata3", "1024", "7200"};
-        hdd[1] = disk;
-        disk = new String[]{"WD Blue 2tb", "2000", "sata3", "2048", "7200"};
-        hdd[2] = disk;
-        disk = new String[]{"WD Ultrastar DC HA210 512gb", "400", "sata3", "512", "5200"};
-        hdd[3] = disk;
-        disk = new String[]{"WD Ultrastar DC HA210 1tb", "890", "sata3", "1024", "5200"};
-        hdd[4] = disk;
-        disk = new String[]{"WD Ultrastar DC HA210 2tb", "1890", "sata3", "2048", "5200"};
-        hdd[5] = disk;
-        disk = new String[]{"Kingston A400", "1280", "sata3", "1024", "320"};
-        ssd[0] = disk;
-        disk = new String[]{"HP S750", "1990", "sata3", "256", "560"};
-        ssd[1] = disk;
-        disk = new String[]{"HP EX900", "3990", "m2", "512", "650"};
-        m2[0] = disk;
-        disk = new String[]{"ARDOR GAMING Ally AL1282", "5900", "m2", "1024", "1300"};
-        m2[1] = disk;
+        disk = new String[]{ "500", "sata3", "512", "7200"};
+        disks.put("WD Blue 512gb", disk);
+        disk = new String[]{"1000", "sata3", "1024", "7200"};
+        disks.put("WD Blue 1tb", disk);
+        disk = new String[]{"2000", "sata3", "2048", "7200"};
+        disks.put("WD Blue 2tb", disk);
+        disk = new String[]{"400", "sata3", "512", "5200"};
+        disks.put("WD Ultrastar DC HA210 512gb", disk);
+        disk = new String[]{"890", "sata3", "1024", "5200"};
+        disks.put("WD Ultrastar DC HA210 1tb", disk);
+        disk = new String[]{"1890", "sata3", "2048", "5200"};
+        disks.put("WD Ultrastar DC HA210 2tb", disk);
+        disk = new String[]{"1280", "sata3", "1024", "320"};
+        disks.put("Kingston A400", disk);
+        disk = new String[]{"1990", "sata3", "256", "560"};
+        disks.put("HP S750", disk);
+        disk = new String[]{"3990", "m2", "512", "650"};
+        disks.put("HP EX900", disk);
+        disk = new String[]{"5900", "m2", "1024", "1300"};
+        disks.put("ARDOR GAMING Ally AL1282", disk);
         // до сюда
-
-        disks.put("ssd", ssd);
-        disks.put("hdd", hdd);
-        disks.put("m.2", m2);
     }
 
     private void psu_make(){
@@ -340,97 +336,91 @@ public class Settings {
             String[] proc = new String[20];
 
             String[][] intel = new String[23][20]; // количество процессоров замени x
-            // {name, price, cores, potoc, ecocores, L2, L3, Z, core, quality, turbo, operative_memory_type, highest_operative_quality, maxmemory, heat_generation, max_temperaturem graphic_model, quality_graphic, virtualization, year}
+            // {name, price, socket, cores, potoc, ecocores, L2, L3, Z, core, quality, turbo, operative_memory_type, highest_operative_quality, maxmemory, heat_generation, max_temperaturem, graphic_model, quality_graphic, virtualization, year}
             // копировать от сюда
-            proc = new String[]{"Intel Pentium G4400", "2999", "2", "2", "0", "0.5", "3", "14", "Intel Skylake-S", "3.3", "3.3", "DDR3L,DDR4", "DDR3L:2133,DDR4:2133", "64", "54", "72", "Intel HD Graphics 510", "1000", "true", "2015"};
+            proc = new String[]{"Intel Core i3-9100F", "9499", "lga1200", "4", "4", "0", "1", "6", "14", "Intel Coffee Lake R", "3.6", "4.2", "DDR4", "DDR4:2400", "64", "65", "100", "", "0", "true", "2019"};
             intel[0] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i3-9100F", "9499", "4", "4", "0", "1", "6", "14", "Intel Coffee Lake R", "3.6", "4.2", "DDR4", "DDR4:2400", "64", "65", "100", "", "0", "true", "2019"};
+            proc = new String[]{"Intel Core i3-9100","13199", "lga1151-v2", "6", "6", "0", "1.5", "9", "14", "Intel Coffee Lake R", "2.9", "4.1", "DDR4", "DDR4:2666", "128", "65", "100", "Intel UHD Graphics 630", "1050", "true", "2019"};
             intel[1] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i3-9100","13199", "6", "6", "0", "1.5", "9", "14", "Intel Coffee Lake R", "2.9", "4.1", "DDR4", "DDR4:2666", "128", "65", "100", "Intel UHD Graphics 630", "1050", "true", "2019"};
+            proc = new String[]{"Intel Core i5-9400F", "9799", "lga1151-v2", "6", "6", "0", "1.5", "9", "14", "Intel Coffee Lake R", "2.9", "4.1", "DDR4", "DDR4:2666", "128", "65", "100", "", "0", "true", "2019"};
             intel[2] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i5-9400F", "9799", "6", "6", "0", "1.5", "9", "14", "Intel Coffee Lake R", "2.9", "4.1", "DDR4", "DDR4:2666", "128", "65", "100", "", "0", "true", "2019"};
+            proc = new String[]{"Intel Core i5-9400", "9199", "lga1151-v2", "6", "6", "0", "1.5", "9", "14", "Intel Coffee Lake R", "2.9", "4.1", "DDR4", "DDR4:2666", "128", "65", "100", "Intel UHD Graphics 630", "1050", "true", "2019"};
             intel[3] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i5-9400", "9199", "6", "6", "0", "1.5", "9", "14", "Intel Coffee Lake R", "2.9", "4.1", "DDR4", "DDR4:2666", "128", "65", "100", "Intel UHD Graphics 630", "1050", "true", "2019"};
+            proc = new String[]{"Intel Core i7-9700KF","17699", "lga1151-v2", "8", "8", "0", "2", "12", "14", "Intel Coffee Lake R", "3.6", "4.9", "DDR4", "DDR4:2666", "128", "95", "100", "", "0", "true", "2019"};
             intel[4] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i7-9700KF","17699", "8", "8", "0", "2", "12", "14", "Intel Coffee Lake R", "3.6", "4.9", "DDR4", "DDR4:2666", "128", "95", "100", "", "0", "true", "2019"};
+            proc = new String[]{"Intel Core i3-12100F","8499", "lga1700", "4", "8", "0", "5", "12", "10", "Intel Alder Lake-S", "3.3", "4.3", "DDR4,DDR5", "DDR4:3200, DDR5:4800", "128", "89", "100", "", "0", "true", "2022"};
             intel[5] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Celeron G6900", "5499", "2", "2", "0", "2.5", "4", "10", "Intel Alder Lake-S", "3.4", "3.4", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "46", "100", "Intel UHD Graphics 710", "1.3", "true", "2022"};
+            proc = new String[]{"Intel Core i3-12100","11299", "lga1700", "4", "8", "0", "5", "12", "10", "Intel Alder Lake-S", "3.3", "4.3", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "89", "100", "Intel UHD Graphics 730", "1.4", "true", "2022"};
             intel[6] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i3-12100F","8499", "4", "8", "0", "5", "12", "10", "Intel Alder Lake-S", "3.3", "4.3", "DDR4,DDR5", "DDR4:3200, DDR5:4800", "128", "89", "100", "", "0", "true", "2022"};
+            proc = new String[]{"Intel Core i3-13100F", "12499", "lga1700", "4", "8", "0", "5", "12", "10", "Intel Raptor Lake-S", "3.4", "4.5", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "192", "89", "100", "", "0", "true", "2023"};
             intel[7] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Pentium Gold G740", "9299", "2", "4", "0", "2.5", "6", "10", "Intel Alder Lake-S", "3.7", "3.7", "3200", "4800", "128", "46", "100", "Intel UHD Graphics", "710", "1.35", "true", "2022"};
+            proc = new String[]{"Intel Core i3-13100", "13999", "lga1700", "4", "8", "0", "5", "12", "10", "Intel Raptor Lake-S", "3.4", "4.5", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "192", "110", "100", "Intel UHD Graphics 730", "1.5", "true", "2023"};
             intel[8] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i3-12100","11299", "4", "8", "0", "5", "12", "10", "Intel Alder Lake-S", "3.3", "4.3", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "89", "100", "Intel UHD Graphics 730", "1.4", "true", "2022"};
+            proc = new String[]{"Intel Core i5-12400F", "14799", "lga1700", "6", "12", "0", "7.5", "18", "10", "Intel Alder Lake-S", "2.5", "4.4", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "117", "100", "", "0", "true", "2022"};
             intel[9] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i3-13100F", "12499", "4", "8", "0", "5", "12", "10", "Intel Raptor Lake-S", "3.4", "4.5", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "192", "89", "100", "", "0", "true", "2023"};
+            proc = new String[]{"Intel Core i5-12400", "16499", "lga1700", "6", "12", "0", "7.5", "18", "10", "Intel Alder Lake-S", "2.5", "4.4", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "117", "100", "Intel UHD Graphics 730", "1.45", "true", "2022"};
             intel[10] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i3-13100", "13999", "4", "8", "0", "5", "12", "10", "Intel Raptor Lake-S", "3.4", "4.5", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "192", "110", "100", "Intel UHD Graphics 730", "1.5", "true", "2023"};
+            proc = new String[]{"Intel Core i5-12600K","25499", "lga1700", "10", "16", "4", "9.5", "20", "10", "Intle Alder Lake-S", "3.7", "4.9", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "150", "100", "Intel UHD Graphics 770", "1.45", "true", "2022"};
             intel[11] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i5-12400F", "14799", "6", "12", "0", "7.5", "18", "10", "Intel Alder Lake-S", "2.5", "4.4", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "117", "100", "", "0", "true", "2022"};
+            proc = new String[]{"Intel Core i5-13500", "27999", "lga1700", "14", "20", "8", "11.5", "24", "10", "Intel Raptor Lake-S", "2.5", "4.8", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "192", "154", "100", "Intel UHD Graphics 770", "1.55", "true", "2023"};
             intel[12] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i5-12400", "16499", "6", "12", "0", "7.5", "18", "10", "Intel Alder Lake-S", "2.5", "4.4", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "117", "100", "Intel UHD Graphics 730", "1.45", "true", "2022"};
+            proc = new String[]{"Intel Core i7-12700F", "31499", "lga1700", "12", "20", "4", "12", "25", "10", "Intel Alder Lake-S", "2.1", "4.9", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "180", "100", "", "0", "true", "2021"};
             intel[13] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i5-12600K","25499", "10", "16", "4", "9.5", "20", "10", "Intle Alder Lake-S", "3.7", "4.9", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "150", "100", "Intel UHD Graphics 770", "1.45", "true", "2022"};
+                proc = new String[]{"Intel Core i7-12700","31999", "lga1700", "12", "20", "4", "12", "25", "10", "Intel Alder Lake-S", "2.1", "4.9", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "180", "100", "Intel UHD Graphics 770", "1.5", "true", "2021"};
             intel[14] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i5-13500", "27999", "14", "20", "8", "11.5", "24", "10", "Intel Raptor Lake-S", "2.5", "4.8", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "192", "154", "100", "Intel UHD Graphics 770", "1.55", "true", "2023"};
+            proc = new String[]{"Intel Core i7-12700K","35999", "lga1700", "12", "20", "4", "12", "25", "10", "Intel Alder Lake-S", "3.6", "5", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "190", "100", "Intel UHD Graphics 770", "1.5", "true", "2021"};
             intel[15] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i7-12700F", "31499", "12", "20", "4", "12", "25", "10", "Intel Alder Lake-S", "2.1", "4.9", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "180", "100", "", "0", "true", "2021"};
+            proc = new String[]{"Intel Core i9-11900", "24999", "lga1200", "10", "20", "4", "0.25", "20", "10", "Rocket Lake", "2.8", "5.1", "DDR4", "DDR4:3200,DDR5:4800", "128", "65", "100", "Intel UHD Graphics 630", "1.3", "true", "2021"};
             intel[16] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i7-12700","31999", "12", "20", "4", "12", "25", "10", "Intel Alder Lake-S", "2.1", "4.9", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "180", "100", "Intel UHD Graphics 770", "1.5", "true", "2021"};
+            proc = new String[]{"Intel Core i7-10700","20999", "lga1200", "6", "12", "4", "0.25", "12", "14", "Rocket Lake", "3.1", "4.5", "DDR4", "DDR4:3200", "64", "65", "100", "Intel UHD Graphics 630", "1.3", "true", "2021"};
             intel[17] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i7-12700K","35999", "12", "20", "4", "12", "25", "10", "Intel Alder Lake-S", "3.6", "5", "DDR4,DDR5", "DDR4:3200,DDR5:4800", "128", "190", "100", "Intel UHD Graphics 770", "1.5", "true", "2021"};
+            proc = new String[]{"Intel Core i5-11500","15499", "lga1200", "6", "12", "4", "0.25", "12", "14", "Rocket Lake", "2.7", "4.6", "DDR4", "DDR4:3200", "64", "65", "100", "Intel UHD Graphics 630", "1.3", "true", "2021"};
             intel[18] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i9-11900", "24999", "10", "20", "4", "0.25", "20", "10", "Rocket Lake", "2.8", "5.1", "DDR4", "DDR4:3200,DDR5:4800", "128", "65", "100", "Intel UHD Graphics 630", "1.3", "true", "2021"};
+            proc = new String[]{"Intel Core i3-10100","12199", "lga1200", "4", "8", "4", "0.25", "12", "14", "Rocket Lake", "3.6", "4.3", "DDR4", "DDR4:3200", "64", "65", "100", "Intel UHD Graphics 630", "1.3", "true", "2021"};
             intel[19] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i7-10700","20999", "6", "12", "4", "0.25", "12", "14", "Rocket Lake", "3.1", "4.5", "DDR4", "DDR4:3200", "64", "65", "100", "Intel UHD Graphics 630", "1.3", "true", "2021"};
-            intel[20] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i5-11500","15499", "6", "12", "4", "0.25", "12", "14", "Rocket Lake", "2.7", "4.6", "DDR4", "DDR4:3200", "64", "65", "100", "Intel UHD Graphics 630", "1.3", "true", "2021"};
-            intel[21] = proc; // i замени на индекс процессора индексация идёт от 0
-            proc = new String[]{"Intel Core i3-10100","12199", "4", "8", "4", "0.25", "12", "14", "Rocket Lake", "3.6", "4.3", "DDR4", "DDR4:3200", "64", "65", "100", "Intel UHD Graphics 630", "1.3", "true", "2021"};
-            intel[22] = proc; // i замени на индекс процессора индексация идёт от 0
             // до сюда не включительно
 
             String[][] amd = new String[20][20]; // тоже замени
 
             // копировать от сюда
             proc = new String[]{"AMD Athlon 200GE", "price", "cores", "potocs", "ecocores", "L2", "L3", "Z", "core", "quality", "operative_memory", "heighest_operative_quality", "maxmemory", "heat_generation", "maxtemperature", "graphic_model", "quality_graphic", "virtualization", "year"};
-            amd[0] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[0] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"7899", "6", "12", "0", "3", "8", "12", "AMD Renoir", "3.6", "4.1", "DDR4", "3200", "128", "65", "95", "", "0", "true", "2019"};
-            amd[1] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[1] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 5 5600","11799", "6", "12", "0", "3", "32", "12", "AMD Vermeer", "3.5", "4.4", "DDR4", "3200", "128", "65", "90", "", "0", "true", "2022"};
-            amd[2] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[2] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 3 3200G","8799", "4", "4", "0", "2", "4", "12", "AMD Picasso", "3.6", "4", "DDR4", "2933", "64", "65", "95", "AMD Radeon Vega 8", "1.25", "true", "2019"};
-            amd[3] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[3] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 5 4600G","11999", "6", "12", "0", "3", "8", "12", "AMD Renoir", "3.7", "4.2", "DDR4", "3200", "128", "65", "95", "AMD Radeon Vega 7", "1.9", "true", "2020"};
-            amd[4] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[4] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 5 5600G", "12499", "6", "12", "0", "3", "16", "12", "AMD Cezanne", "3.9", "4.4", "DDR4", "3200", "128", "65", "95", "AMD Radeon Vega 7", "1.9", "true", "2021"};
-            amd[5] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[5] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 7 3700X","15999", "8", "16", "0", "4", "32", "12", "AMD Matisse", "3.6", "4.4", "DDR4", "3200", "128", "65", "95", "", "0", "true", "2019"};
-            amd[6] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[6] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 5 3600X","16499", "6", "12", "0", "3", "32", "12", "AMD Matisse", "3.8", "4.4", "DDR4", "3200", "128", "95", "95", "", "0", "true", "2019"};
-            amd[7] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[7] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 7 5700X", "18799", "8", "16", "0", "4", "32", "12", "AMD Vermeer", "3.4", "4.6", "DDR4", "3200", "128", "65", "90", "", "0", "true", "2022"};
-            amd[8] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[8] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 7 5800X", "22999", "8", "16", "0", "4", "32", "12", "AMD Vermeer", "3.8", "4.7", "DDR4", "3200", "128", "105", "90", "", "0", "true", "2020"};
-            amd[10] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[10] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 9 5950X", "48999", "16", "32", "0", "8", "64", "12", "AMD Vermeer", "3.4", "4.9", "DDR4", "3200", "128", "105", "90", "", "0", "true", "2020"};
-            amd[11] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[11] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 5 7500F", "17999", "6", "12", "0", "6", "32", "5", "AMD Raphael", "3.7", "5", "DDR5", "5200", "128", "65", "95", "", "0", "true", "2023"};
-            amd[12] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[12] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 5 7600", "20499", "6", "12", "0", "6", "32", "5", "AMD Raphael", "3.8", "5.1", "DDR5", "5200", "128", "65", "95", "AMD Radeon Graphics", "2.2", "true", "2023"};
-            amd[13] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[13] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 5 7600X", "25999", "6", "12", "0", "6", "32", "5", "AMD Raphael", "4.7", "5.3", "DDR5", "5200", "128", "105", "95", "AMD Radeon Graphics", "2.2", "true", "2022"};
-            amd[14] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[14] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 7 7700","28499", "8", "16", "0", "8", "32", "5", "AMD Raphael", "3.8", "5.3", "DDR5", "5200", "128", "65", "95", "AMD Radeon Graphics", "2.2", "true", "2023"};
-            amd[15] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[15] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 7 7700X","33299", "8", "16", "0", "8", "32", "5", "AMD Raphael", "4.5", "5.4", "DDR5", "5200", "128", "105", "95", "AMD Radeon Graphics", "2.2", "true", "2022"};
-            amd[16] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[16] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 9 7900X","46399", "12", "24", "0", "12", "64", "5", "AMD Raphael", "4.7", "5.6", "DDR5", "5200", "128", "170", "95", "AMD Radeon Graphics", "2.2", "true", "2022"};
-            amd[17] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[17] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 9 7950X", "62499", "16", "32", "0", "16", "64", "5", "AMD Raphael", "4.5", "5.7", "DDR5", "5200", "128", "170", "95", "AMD Radeon Graphics", "2.2", "true", "2022"};
-            amd[18] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[18] = proc; // i замени на индекс процессора индексация идёт от 0
             proc = new String[]{"AMD Ryzen 9 7900", "45999", "12", "24", "0", "12", "64", "5", "AMD Raphael", "3.7", "5.4", "DDR5", "5200", "128", "65", "95", "AMD Radeon Graphics", "2.2", "true", "2023"};
-            amd[19] = proc; // i замени на индекс процессора индексация идёт от 0
+            //amd[19] = proc; // i замени на индекс процессора индексация идёт от 0
 
             // до сюда не включительно
 
@@ -462,4 +452,35 @@ public class Settings {
             }
             return new String[]{name, number};
         }
+
+        protected String[] find_the_name_of_disk(String disk){
+            String name="", number="";
+            for (int i=0;i<disk.length();i++){
+                if (disk.charAt(disk.length()-1-i) == ' '){
+                    name = disk.substring(0, disk.length()-1-i);
+                    number = disk.substring(disk.length()-i, disk.length());
+                    break;
+                }
+            }
+            return new String[]{name, number};
+    }
+    protected boolean was_tovar(String tovar){
+        boolean answer = false;
+        for (int i=0;i<was_len;i++){
+            if (string_checker(was[i], tovar)){
+                answer = true;
+                break;
+            }
+        }
+        return answer;
+    }
+
+    protected void add_tovar_to_was(String tovar){
+        for (int i=0;i<was.length;i++){
+            if (was[i] == null){
+                was[i] = tovar;
+                break;
+            }
+        }
+    }
 }
