@@ -36,6 +36,8 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.VideoView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.HashMap;
 import java.util.zip.ZipInputStream;
 
@@ -185,10 +187,10 @@ public class MainActivity extends Activity {
         // inizializate elements
         Button back = findViewById(R.id.chooese_langue_make_app_back);
         Button clicks_btn = findViewById(R.id.chooese_langue_make_app_clicks_btn);
-        Button blocking_btn = findViewById(R.id.chooese_langue_make_app_blocking_btn);
+        //Button blocking_btn = findViewById(R.id.chooese_langue_make_app_blocking_btn);
         // end
 
-        blocking_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.blocking_program);make_blocking();}});
+        //blocking_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.blocking_program);make_blocking();}});
 
         back.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.choose_quest_activity);choose_quest();}});
 
@@ -427,12 +429,12 @@ public class MainActivity extends Activity {
 
         magazine_work.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {end_of_magazine_showcase();setContentView(R.layout.work_activity);ini_work();}});
     }
-
     protected void add_componets_to_showcase(LinearLayout showcase){
         LinearLayout row = new LinearLayout(getApplicationContext());
 
         for (int i=0;i<13;i++){
             LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             for (int i2=0;i2<2;i2++){
                 add_element_to_magazine(linearLayout, row);
             }
@@ -445,7 +447,7 @@ public class MainActivity extends Activity {
         Random random = new Random();
         ImageButton btn = new ImageButton(getApplicationContext());
         TextView textView = new TextView(getApplicationContext());
-        int tovar = random.nextInt(2);
+        int tovar = random.nextInt(8);
         LinearLayout lt = new LinearLayout(getApplicationContext());
 
         lt.setOrientation(LinearLayout.VERTICAL);
@@ -458,6 +460,7 @@ public class MainActivity extends Activity {
 
         btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
         btn.setBackgroundColor(getColor(R.color.spirit));
+        btn.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(getColor(R.color.black));
@@ -470,33 +473,41 @@ public class MainActivity extends Activity {
                 int index = random.nextInt(20);
                 String naming = lst[index][0];
                 boolean is_found = false;
-                for (int i3=0;i3<20;i3++) {naming = lst[random.nextInt(20)][0];System.out.println(naming);if (settings.was_tovar(naming) == false) {is_found=true;break;}}
+                for (int i3=0;i3<20;i3++) {naming = lst[random.nextInt(20)][0];if (settings.was_tovar(naming) == false) {is_found=true;break;}}
 
-                if (is_found == false){
-                    add_element_to_magazine(linearLayout, row);
+                if (is_found == false)add_element_to_magazine(linearLayout, row);
+
+                else {
+                    settings.was_len++;
+                    settings.add_tovar_to_was(naming);
+
+                    textView.setText(naming);
+
+                    try {
+                        String finalNaming = naming;
+                        btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_show_element);magazine_show(finalNaming, 0, 0);}});
+                        naming = naming.replace("/", "");
+                        naming = naming.replace(".", "");
+                        InputStream inputStream = getAssets().open("processors/" + naming + ".png");
+                        Drawable drawable = Drawable.createFromStream(inputStream, naming);
+                        btn.setImageDrawable(drawable);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    lt.addView(btn);
+                    lt.addView(textView);
+                    linearLayout.addView(lt);
                 }
-
-                settings.was_len ++;
-                settings.add_tovar_to_was(naming);
-
-                try {
-                    InputStream inputStream = getAssets().open("processors/" + naming + ".png");
-                    System.out.println("processors/" + naming + ".png");
-                    Drawable drawable = Drawable.createFromStream(inputStream, naming);
-                    btn.setImageDrawable(drawable);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                lt.addView(textView);
-                lt.addView(btn);
-                textView.setText(naming);
-                linearLayout.addView(lt);
             }
-        } else if (tovar == 1){
+        }
+        else if (tovar == 1){
             String[][] socket=new String[10][];
             String naming = "";
-            while (true){
-                int r = random.nextInt(4);
+            int r=0;
+            boolean is_found = false;
+            for (int i=0;i<11;i++){
+                r = random.nextInt(4);
                 int max = 0;
                 if (r == 0) {
                     socket = settings.motherboards.get("lga1151");
@@ -513,59 +524,431 @@ public class MainActivity extends Activity {
                 }
 
                 naming = socket[random.nextInt(max)][0];
-                if (settings.was_tovar(naming) == false) break;
+                if (settings.was_tovar(naming) == false) {is_found = true;break;}
             }
+            if (is_found == false) add_element_to_magazine(linearLayout, row);
+            else{
+                String finalNaming = naming;
+                int finalr = r;
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_show_element);magazine_show(finalNaming, 1, finalr);}});
+                settings.add_tovar_to_was(naming);
+                naming = naming.replace("/", "");
+                naming = naming.replace(".", "");
+                settings.was_len ++;
+                textView.setText(naming);
 
-            textView.setText(naming);
+                try {
+                    InputStream inputStream = getAssets().open("motherboards/" + naming + ".png");
+                    Drawable drawable = Drawable.createFromStream(inputStream, naming);
+                    btn.setImageDrawable(drawable);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                lt.addView(btn);
+                lt.addView(textView);
+                linearLayout.addView(lt);
+            }
+        }
+        else if (tovar == 2){
+            String naming = "";
+            boolean is_found = false;
+            for (int i=0;i<7;i++){
+                naming = settings.rams_names[random.nextInt(7)];
+                if (settings.was_tovar(naming) == false) {is_found = true;break;}
+            }
+            if (is_found == false)add_element_to_magazine(linearLayout, row);
+            else {
+                String finalNaming = naming;
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_show_element);magazine_show(finalNaming, 2, 0);}});
+                settings.add_tovar_to_was(naming);
+                naming = naming.replace("/", "");
+                naming = naming.replace(".", "");
+                settings.was_len++;
 
+                textView.setText(naming);
 
+                try {
+                    naming = naming.replace("/", "");
+                    naming = naming.replace(".", "");
+                    InputStream inputStream = getAssets().open("rams/" + naming + ".png");
+                    Drawable drawable = Drawable.createFromStream(inputStream, naming);
+                    btn.setImageDrawable(drawable);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                InputStream inputStream = getAssets().open("motherboards/" + naming + ".png");
-                Drawable drawable = Drawable.createFromStream(inputStream, naming);
-                btn.setImageDrawable(drawable);
-            } catch (Exception e){e.printStackTrace();}
-            lt.addView(btn);
-            lt.addView(textView);
-            linearLayout.addView(lt);
+                lt.addView(btn);
+                lt.addView(textView);
+                linearLayout.addView(lt);
+            }
+        }
+        else if (tovar == 3){
+            String naming = "";
+            boolean is_found = false;
+            for (int i=0;i<4;i++){
+                naming = settings.cooler_names[random.nextInt(4)];
+                if (settings.was_tovar(naming) == false){is_found = true;break;}
+            }
+            if (is_found == false) add_element_to_magazine(linearLayout, row);
+            else {
+                String finalNaming = naming;
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_show_element);magazine_show(finalNaming, 3, 0);}});
+                settings.add_tovar_to_was(naming);
+                naming = naming.replace("/", "");
+                naming = naming.replace(".", "");
+                settings.was_len ++;
+                textView.setText(naming);
+                try {
+                    InputStream inputStream = getAssets().open("coolers/" + naming + ".png");
+                    Drawable drawable = Drawable.createFromStream(inputStream, naming);
+                    btn.setImageDrawable(drawable);
+                } catch (Exception e){e.printStackTrace();}
+                lt.addView(btn);
+                lt.addView(textView);
+                linearLayout.addView(lt);
+            }
+        }
+        else if (tovar == 4){
+            String naming = "";
+            boolean is_found = false;
+            for (int i=0;i<7;i++){
+                naming = settings.psus_names[random.nextInt(7)];
+                if (settings.was_tovar(naming) == false) {is_found = true;break;}
+            }
+            if (is_found == false) add_element_to_magazine(linearLayout, row);
+            else {
+                String finalNaming = naming;
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_show_element);magazine_show(finalNaming, 4, 0);}});
+                settings.add_tovar_to_was(naming);
+                naming = naming.replace("/", "");
+                naming = naming.replace(".", "");
+                settings.was_len ++;
+                textView.setText(naming);
+                try {
+                    naming = naming.replace("/", "");
+                    naming = naming.replace(".", "");
+                    InputStream inputStream = getAssets().open("psus/" + naming + ".png");
+                    Drawable drawable = Drawable.createFromStream(inputStream, naming);
+                    btn.setImageDrawable(drawable);
+                } catch (Exception e){e.printStackTrace();}
+                lt.addView(btn);
+                lt.addView(textView);
+                linearLayout.addView(lt);
+            }
+        }
+        else if (tovar == 5){
+            String naming = "";
+            boolean is_found = false;
+            for (int i=0;i<10;i++){
+                naming = settings.disks_names[random.nextInt(10)];
+                if (settings.was_tovar(naming) == false){is_found = true;break;}
+            }
+            if (is_found == false) add_element_to_magazine(linearLayout, row);
+            else {
+                settings.add_tovar_to_was(naming);
+                settings.was_len ++;
+
+                textView.setText(naming);
+
+                String finalNaming = naming;
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_show_element);magazine_show(finalNaming, 5, 0);}});
+
+                try {
+                    naming = naming.replace("/", "");
+                    naming = naming.replace(".", "");
+                    InputStream inputStream = getAssets().open("disks/" + naming + ".png");
+                    Drawable drawable = Drawable.createFromStream(inputStream, naming);
+                    btn.setImageDrawable(drawable);
+                } catch (Exception e){e.printStackTrace();}
+
+                lt.addView(btn);
+                lt.addView(textView);
+                linearLayout.addView(lt);
+            }
+        }
+        else if (tovar == 6){
+            String naming = "";
+            boolean is_found = false;
+            for (int i=0;i<20;i++){
+                naming = settings.videcards_names[random.nextInt(20)];
+                if (settings.was_tovar(naming) == false){is_found = true;break;}
+            }
+            if (is_found == false) add_element_to_magazine(linearLayout, row);
+            else {
+                String finalNaming = naming;
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_show_element);magazine_show(finalNaming, 6, 0);}});
+                settings.was_len ++;
+                settings.add_tovar_to_was(naming);
+
+                textView.setText(naming);
+
+                try {
+                    naming = naming.replace("/", "");
+                    naming = naming.replace(".", "");
+                    InputStream inputStream = getAssets().open("videocards/" + naming + ".png");
+                    Drawable drawable = Drawable.createFromStream(inputStream, naming);
+                    btn.setImageDrawable(drawable);
+                } catch (Exception e){e.printStackTrace();}
+
+                lt.addView(btn);
+                lt.addView(textView);
+                linearLayout.addView(lt);
+            }
+        }
+        else if (tovar == 7){
+            String naming = "";
+            boolean is_found = false;
+            for (int i=0;i<5;i++){
+                naming = settings.cases_names[random.nextInt(5)];
+                if (settings.was_tovar(naming) == false){is_found = true;break;}
+            }
+            if (is_found == false) add_element_to_magazine(linearLayout, row);
+            else {
+                String finalNaming = naming;
+                btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_show_element);magazine_show(finalNaming, 7, 0);}});
+                settings.was_len ++;
+                settings.add_tovar_to_was(naming);
+                textView.setText(naming);
+                try {
+                    naming = naming.replace("/", "");
+                    naming = naming.replace(".", "");
+                    InputStream inputStream = getAssets().open("cases/" + naming + ".png");
+                    Drawable drawable = Drawable.createFromStream(inputStream, naming);
+                    btn.setImageDrawable(drawable);
+                } catch (Exception e){e.printStackTrace();}
+                lt.addView(btn);
+                lt.addView(textView);
+                linearLayout.addView(lt);
+            }
         }
     }
     protected void end_of_magazine_showcase(){
         settings.magazine_is_back_btn_showed=false;
         settings.showed_elements_magazine=0;
         settings.showed_elements=0;
+        settings.was = new String[256];
+        settings.was_len = 0;
     }
 
-    protected void magazine_show(String name_element){
+    protected void magazine_show(String name_element, int category, int type){
         // inizializate
         ImageView img = findViewById(R.id.magazine_show_img);
         Button buy_btn = findViewById(R.id.magazine_show_buy_btn);
         Button back = findViewById(R.id.magazine_show_back);
-        TextView text = findViewById(R.id.magazine_show_text);
+        TextView textView = findViewById(R.id.magazine_show_text);
         // end
-        String[] characteristics = new String[19];
-        if (name_element.indexOf("Intel") != -1) {
-            for (int i=0;i<settings.processors.get("intel").length;i++){
-                if (settings.processors.get("intel")[i][0].indexOf(name_element) != -1) {characteristics = settings.processors.get("intel")[i];break;}
+
+        settings.was = new String[256];
+        settings.was_len = 0;
+
+        String text = "";
+        Drawable img_drawable = null;
+        int price = 0;
+        if (category == 0){
+            if (type == 0){
+                String[][] lst = settings.processors.get("intel");
+                for (int i=0;i<lst.length;i++){
+                    if (settings.string_checker(lst[i][0], name_element)){
+                        String[] charactrestics = lst[i];
+                        text = "Name: " + name_element + "\nSocket: ";
+                        text = text + charactrestics[2] + "\nPrice: ";
+                        text = text + charactrestics[1] + "$\nCores: ";
+                        text = text + charactrestics[3] + "\nStreams: ";
+                        text = text + charactrestics[4] + "\nEco-Cores: ";
+                        text = text + charactrestics[5] + "\nL2 cash: ";
+                        text = text + charactrestics[6] + "Mb\nL3 cash: ";
+                        text = text + charactrestics[7] + "Mb\nThickness: ";
+                        text = text + charactrestics[8] + "\nCore type: ";
+                        text = text + charactrestics[9] + "\nProcessor's frequency: ";
+                        text = text + charactrestics[10] + "Ggz\nProcessor's turbo frequency: ";
+                        text = text + charactrestics[11] + "Ggz\nProcessor's max operative frequency: ";
+                        text = text + charactrestics[13] + "\nMax operative memory: ";
+                        text = text + charactrestics[14] + "Gb\nHeat generation: ";
+                        text = text + charactrestics[14] + "W\nMax temperature";
+                        text = text + charactrestics[16] + "\nGraphic model: ";
+                        text = text + charactrestics[17] + "\nGraphic's frequency: ";
+                        text = text + charactrestics[18] + "Ggz\nVirtualization: ";
+                        text = text + charactrestics[19] + "\nYear: " + charactrestics[20];
+                        price = Integer.parseInt(charactrestics[1]);
+                        try {
+                            InputStream inputStream = getAssets().open("processors/" + name_element + ".png");
+                            img_drawable = Drawable.createFromStream(inputStream, name_element);
+                        } catch (Exception e){e.printStackTrace();}
+                        buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, 0, 0);setContentView(R.layout.magazine_activity);ini_magazine();}});
+                        break;
+                    }
+                }
             }
         }
-        else {
-            for (int i=0;i<settings.processors.get("amd").length;i++){
-                if (settings.processors.get("amd")[i][0].indexOf(name_element) != -1) {characteristics = settings.processors.get("amd")[i];break;}
+        else if (category == 1){
+            String socket_name = "";
+            if (type == 0) socket_name = "lga1151";
+            if (type == 1) socket_name = "lga1151-v2";
+            if (type == 2) socket_name = "lga1200";
+            if (type == 3) socket_name = "lga1700";
+            String[][] lst = settings.motherboards.get(socket_name);
+
+            for (int i=0;i<lst.length;i++){
+                if (settings.string_checker(name_element, lst[i][0])){
+                    String[] characteristics = settings.motherboards.get(socket_name)[i];
+                    price = Integer.parseInt(characteristics[1]);
+                    text = "Name: " + name_element + "\nSocket: " + socket_name + "\nYear: ";
+                    text = text + characteristics[2] + "\nPrice: ";
+                    text = text + characteristics[1] + "$\nform-factor: ";
+                    text = text + characteristics[3] + "\nRAM slots: ";
+                    text = text + characteristics[5] + "\nMAX RAM: ";
+                    text = text + characteristics[6] + "Gb\nMAX RAM frequency: ";
+                    text = text + characteristics[7] + "\nM.2 connectors: ";
+                    text = text + characteristics[8] + "\nSata connectors: ";
+                    text = text + characteristics[9] + "\nUsb2 ports: ";
+                    text = text + characteristics[10] + "\nUsb3 prots: ";
+                    text = text + characteristics[11]  + "\nUsb-c ports: ";
+                    text = text + characteristics[12] + "\nNutrition: ";
+                    text = text + characteristics[13] + "pins\nLights: " + characteristics[14];
+                    try {
+                        InputStream inputStream = getAssets().open("motherboards/" + name_element + ".png");
+                        img_drawable = Drawable.createFromStream(inputStream, name_element);
+                    } catch (Exception e){e.printStackTrace();}
+                    buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+                    break;
+                }
             }
         }
-        Drawable drawable;
-        img.setScaleType(ImageView.ScaleType.FIT_XY);
-        try {
-            InputStream inputStream = getAssets().open("processors/" + name_element + ".png");
-            drawable = Drawable.createFromStream(inputStream, "magazine_show");
-            img.setImageDrawable(drawable);
-        } catch (IOException e) {e.printStackTrace();}
+        else if (category == 2){
+            String[] characteristics = settings.rams.get(name_element);
+            price = Integer.parseInt(characteristics[0]);
+            text = "Name: " + name_element + "\nMemory type: ";
+            text = text + characteristics[2] + "\nYear: ";
+            text = text + characteristics[1] + "\nMemory: ";
+            text = text + characteristics[3] + "Gb\nMemory timings: ";
+            text = text + characteristics[4] + "\nMemory frequency: ";
+            text = text + characteristics[5];
+            try {
+                InputStream inputStream = getAssets().open("rams/" + name_element + ".png");
+                img_drawable = Drawable.createFromStream(inputStream, name_element);
+            } catch (Exception e) {e.printStackTrace();}
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+        }
+        else if (category == 3){
+            String[] characteristics = settings.culers.get(name_element);
+            price = Integer.parseInt(characteristics[0]);
+            text = "Name: " + name_element + "\nSockets: ";
+            text = text + characteristics[1] + "\nRotational speed: ";
+            text = text + characteristics[2] + "\nHeat_dissipation: ";
+            text = text + characteristics[3] + "W";
+            try {
+                InputStream inputStream = getAssets().open("coolers/" + name_element + ".png");
+                img_drawable = Drawable.createFromStream(inputStream, name_element);
+            } catch (Exception e) {e.printStackTrace();}
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+        }
+        else if (category == 4){
+            String[] characteristics = settings.psus.get(name_element);
+            price = Integer.parseInt(characteristics[0]);
+            text = "Name: " + name_element + "\nMain power connector: ";
+            text = text + characteristics[1] + "\nCpu power connector: ";
+            text = text + characteristics[2] + "\nPCI-E power connectors: ";
+            text = text + characteristics[3] + "\nTotal power: " + characteristics[4] + "W";
+            try {
+                InputStream inputStream = getAssets().open("psus/" + name_element + ".png");
+                img_drawable = Drawable.createFromStream(inputStream, name_element);
+            } catch (Exception e) {e.printStackTrace();}
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
 
+        }
+        else if (category == 5){
+            String[] characteristics = settings.disks.get(name_element);
+            price = Integer.parseInt(characteristics[0]);
+            text = "Name: " + name_element + "\nConnection type: ";
+            text = text + characteristics[1] + "\nMemory: ";
+            text = text + characteristics[2] + "Gb";
+            try {
+                InputStream inputStream = getAssets().open("disks/" + name_element + ".png");
+                img_drawable = Drawable.createFromStream(inputStream, name_element);
+            } catch (Exception e){e.printStackTrace();}
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
 
-        text.setText("name: " + name_element + "\nprice " + characteristics[1] + "\ncores: " + characteristics[2] + "\npotocs: " + characteristics[3] + "\necocores: " + characteristics[4] + "\nL2: " + characteristics[5] + "\nL3: " + characteristics[6] + "\nthickness: " + characteristics[7] + "\ntype of core: " + characteristics[8] + "core frequency: " + characteristics[9] + "\nmax operative memory: " + characteristics[10] + "\nhighest operative frequency: " + characteristics[11] + "\nmax operative memory: " + characteristics[12] + "\nheat generation: " + characteristics[13] + "\nmax work temperature: " + characteristics[14] + "\ngraphic type of core: " + characteristics[15] + "\ngraphic core frequency: " + characteristics[16] + "\nvirtualization: " + characteristics[17] + "\nyear: " + characteristics[18]);
+        }
+        else if (category == 6){
+            String[] characteristics = settings.videocards.get(name_element);
+            price = Integer.parseInt(characteristics[0]);
+            text = "Name: " + name_element + "\nYear: ";
+            text = text + characteristics[1] + "\nMemory type: ";
+            text = text + characteristics[2] + "\nMemory: ";
+            text = text + characteristics[3] + "Gb\nMemory bus: ";
+            text = text + characteristics[4] + "\nMemory frequency: ";
+            text = text + characteristics[5] + "\nTDP: " + characteristics[6];
+            try {
+                InputStream inputStream = getAssets().open("videocards/" + name_element + ".png");
+                img_drawable = Drawable.createFromStream(inputStream, name_element);
+            } catch (Exception e) {e.printStackTrace();}
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+
+        }
+        else if (category == 7){
+            String[] characteristics = settings.cases.get(name_element);
+            price = Integer.parseInt(characteristics[0]);
+            text = "Name: " + name_element + "\nSize: " + characteristics[1];
+            try {
+                InputStream inputStream = getAssets().open("cases/" + name_element + ".png");
+                img_drawable = Drawable.createFromStream(inputStream, name_element);
+            } catch (Exception e){e.printStackTrace();}
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+
+        }
+
+        textView.setText(text);
+        img.setImageDrawable(img_drawable);
+        buy_btn.setText("BUY\n" + price + "$");
 
         back.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
+    }
+
+    protected void buy_element(String name_element, int category, int type){
+        int price = 0;
+        if (category == 0){
+            if (type == 0){
+                String[][] lst = settings.processors.get("intel");
+                for (int i=0;i<20;i++)if (settings.string_checker(lst[i][0], name_element)) price = Integer.parseInt(lst[i][1]);
+            }
+            if (db.money >= price) db.add_element_to_inventory(name_element, 0);
+        }
+        else if (category == 1){
+            String socket_name = "";
+            if (type == 0) socket_name = "lga1151";
+            if (type == 1) socket_name = "lga1151-v2";
+            if (type == 2) socket_name = "lga1200";
+            if (type == 3) socket_name = "lga1700";
+            String[][] lst = settings.motherboards.get(socket_name);
+            for (int i=0;i<lst.length;i++) if (settings.string_checker(lst[i][0], name_element)) price = Integer.parseInt(lst[i][1]);
+            if (db.money >- price) db.add_element_to_inventory(name_element, 1);
+        }
+        else if (category == 2){
+            price = Integer.parseInt(settings.rams.get(name_element)[0]);
+            if (db.money >= price) db.add_element_to_inventory(name_element, 2);
+        }
+        else if (category == 3){
+            price = Integer.parseInt(settings.culers.get(name_element)[0]);
+            if (db.money >= price) db.add_element_to_inventory(name_element, 3);
+        }
+        else if (category == 4){
+            price = Integer.parseInt(settings.psus.get(name_element)[0]);
+            if (db.money >= price) db.add_element_to_inventory(name_element, 4);
+        }
+        else if (category == 5){
+            price = Integer.parseInt(settings.disks.get(name_element)[0]);
+            if (db.money >= price) db.add_element_to_inventory(name_element, 5);
+        }
+        else if (category == 6){
+            price = Integer.parseInt(settings.videocards.get(name_element)[0]);
+            if (db.money >= price) db.add_element_to_inventory(name_element, 6);
+        }
+        else if (category == 7){
+            price = Integer.parseInt(settings.cases.get(name_element)[0]);
+            if (db.money >= price) db.add_element_to_inventory(name_element, 7);
+        }
+        if (db.money >= price) {db.money -= price;}
+
     }
 
     //life                                    |           ____ ____     _____    _____
@@ -577,7 +960,7 @@ public class MainActivity extends Activity {
         Button life_profile = findViewById(R.id.life_profile);
         Button life_magazine = findViewById(R.id.life_magazine);
         Button life_work = findViewById(R.id.life_work);
-        Button life_pet = findViewById(R.id.life_pet);
+        //Button life_pet = findViewById(R.id.life_pet);
         //Button realutionship = findViewById(R.id.life_relationship);
         //Button learn = findViewById(R.id.life_learn);
         //Button transport = findViewById(R.id.life_transport);
@@ -591,7 +974,7 @@ public class MainActivity extends Activity {
 
         life_magazine.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
 
-        life_pet.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {if (db.life_zoo == null){setContentView(R.layout.choose_pet_activity);choose_pet();}else {setContentView(R.layout.pet_normal_activity);normal_pet();}}});
+        //life_pet.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {if (db.life_zoo == null){setContentView(R.layout.choose_pet_activity);choose_pet();}else {setContentView(R.layout.pet_normal_activity);normal_pet();}}});
 
         //realutionship.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {if (db.partners_name == null){setContentView(R.layout.resolutionship_choose_activity);choose_realationship();}else {setContentView(R.layout.normal_relationship);normal_relationship();}}});
 
@@ -1381,28 +1764,8 @@ public class MainActivity extends Activity {
                             fileWriter.write(editText.getText().toString() + "\n");
                             fileWriter.write(settings.new_pc[0] + "," + settings.new_pc[1] + "," + settings.new_pc[2] + "," + settings.new_pc[3] + "," + settings.new_pc[4] + "," + settings.new_pc[5] + "," + settings.new_pc[6] + "," + settings.new_pc[7]);
                             fileWriter.close();
-
-                            FileWriter fileWriter1 = new FileWriter(path + "/details.txt");
-                            fileWriter1.write("0\n");
-                            for (int i=0;i<db.processors_inventory_len;i++) fileWriter1.write(db.processors[i] + ",");
-                            fileWriter1.write("\n1\n");
-                            for (int i=0;i<db.motherboard_inventory_len;i++) fileWriter1.write(db.motherboards[i] + ",");
-                            fileWriter1.write("\n2\n");
-                            for (int i=0;i<db.ram_inventory_len;i++) fileWriter1.write(db.rams[i] + ",");
-                            fileWriter1.write("\n3\n");
-                            for (int i=0;i<db.cases_inventory_len;i++) fileWriter1.write(db.cases[i] + ",");
-                            fileWriter1.write("\n4\n");
-                            for (int i=0;i<db.psus_inventory_len;i++) fileWriter1.write(db.psus[i] + ",");
-                            fileWriter1.write("\n5\n");
-                            for (int i=0;i<db.disks_inventory_len;i++) fileWriter1.write(db.disks[i] + ",");
-                            fileWriter1.write("\n6\n");
-                            for (int i=0;i<db.coolers_inventory_len;i++) fileWriter1.write(db.coolers[i] + ",");
-                            fileWriter1.write("\n7\n");
-                            for (int i=0;i<db.videocards_inventory_len;i++) fileWriter1.write(db.videocards[i] + ",");
-                            fileWriter1.close();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        } catch (IOException e){e.printStackTrace();}
+                        db.save(path);
 
                         settings.new_pc = new String[8];
                     }else {

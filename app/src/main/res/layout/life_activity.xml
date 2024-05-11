@@ -40,7 +40,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="826dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -50,21 +50,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="computer💻" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/life_pet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="pet🐈" />
 
     </LinearLayout>
 

@@ -17,9 +17,4 @@
         android:layout_height="wrap_content"
         android:text="clicks" />
 
-    <Button
-        android:id="@+id/chooese_langue_make_app_blocking_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="blocking" />
 </LinearLayout>

@@ -10,8 +10,8 @@ public class Settings {
     public HashMap<Integer, String[]> quests = new HashMap<>();
     boolean is_it_all = false, is_showed_answer_relationship = false, love_walk = false, magazine_is_back_btn_showed=false;
     public int how_many = 1, realutionship_age = 0, showed_learn = 0, all_pc_complect=0, showed_elements_magazine=0, showed_elements=0, was_len=0;
-    public String[] names = new String[10], new_pc = new String[8];
-    public String[] jobs = new String[10];
+    public String[] names = new String[10], new_pc = new String[8], rams_names = new String[]{"Kingston ValueRAM", "Kingston ValueRAM", "Foxline", "Patriot Viper Elite II", "Samsung", "ADATA XPG Lancer Blade", "ADATA XPG Lancer"};
+    public String[] jobs = new String[10], videcards_names = new String[20], cooler_names = new String[4], disks_names = new String[10], psus_names = new String[7], cases_names = new String[5];
     public int current_showcase=-1;
     public int[] showed_magazine_ls = new int[26];
     public HashMap<String, String[]> pets = new HashMap();
@@ -38,23 +38,23 @@ public class Settings {
         pets.put("bird", new String[]{"54.67", "900", "6.31"});
         pets.put("fishes", new String[]{"546.75", "900", "21.87"});
 
-        for (int i = 0; i < 75; i++) {
+        for (int i = 0; i <= 76; i += 2) {
             String[] a = new String[5]; // от сюда
-            a[0] = "Сделай приложение " + i; // text описание задания
+            a[0] = "Make up"; // text описание задания
             a[1] = "1500"; // money
             a[2] = "100"; // xp
-            a[3] = "1"; // Clicks
+            a[3] = "1284"; // Clicks
             a[4] = Integer.toString(i); // id
             quests.put(i, a);
 
             a = new String[5]; // от сюда
-            a[0] = "Сделай приложение " + (i + 1); // text описание задания
+            a[0] = "Сделай приложение"; // text описание задания
             a[1] = "14837"; // money
             a[2] = "150"; // xp
             a[3] = "2000"; // clicks
             a[4] = Integer.toString(i + 1); // id
 
-            quests.put(i + 75, a); // до сюда надо копировать
+            quests.put(i + 1, a); // до сюда надо копировать
         }
 
 
@@ -131,45 +131,64 @@ public class Settings {
         // копировать от сюда
         videocard = new String[]{"210990", "2022", "GDDR6X", "24", "384", "21000","450"};
         videocards.put("RTX 4090 VENTUS 3X", videocard); // замени name на название видюхи
+        videcards_names[0] = "RTX 4090 VENTUS 3X";
         videocard = new String[]{"189990", "2022", "GDDR6X", "24", "384", "20000","355"};
         videocards.put("Sapphire AMD Radeon RX 7900 XTX NITRO+", videocard); // замени name на название видюхи
+        videcards_names[1] = "Sapphire AMD Radeon RX 7900 XTX NITRO+";
         videocard = new String[]{"129990", "2022", "GDDR6X", "12", "384", "21000","200"};
         videocards.put("GIGABYTE GeForce RTX 4070 AORUS MASTER 12G", videocard); // замени name на название видюхи
+        videcards_names[2] = "GIGABYTE GeForce RTX 4070 AORUS MASTER 12G";
         videocard = new String[]{"69990", "2023", "GDDR6X", "16", "256", "19500","300"};
         videocards.put("Sapphire AMD Radeon RX 7800 XT PURE", videocard); // замени name на название видюхи
+        videcards_names[3] = "Sapphire AMD Radeon RX 7800 XT PURE";
         videocard = new String[]{"109990", "2023", "GDDR6X", "12", "192", "18000","245"};
         videocards.put("ASUS AMD Radeon RX 7700 XT TUF Gaming OC Edition", videocard); // замени name на название видюхи
+        videcards_names[4] = "ASUS AMD Radeon RX 7700 XT TUF Gaming OC Edition";
         videocard = new String[]{"67990", "2023", "GDDR6", "8", "128", "17000","115"};
         videocards.put("GIGABYTE GeForce RTX 4060 AERO OC", videocard); // замени name на название видюхи
+        videcards_names[5] = "GIGABYTE GeForce RTX 4060 AERO OC";
         videocard = new String[]{"49990", "2024", "GDDR6", "16", "128", "17000","190"};
         videocards.put("ASRock AMD Radeon RX 7600 XT Challenger OC", videocard); // замени name на название видюхи
+        videcards_names[6] = "ASRock AMD Radeon RX 7600 XT Challenger OC";
         videocard = new String[]{"54990", "2020", "GDDR6X", "24", "384", "19500","350"};
         videocards.put("Palit GeForce RTX 3090 GamingPro", videocard); // замени name на название видюхи
+        videcards_names[7] = "Palit GeForce RTX 3090 GamingPro";
         videocard = new String[]{"79990", "2020", "GDDR6X", "10", "320", "19000","320"};
         videocards.put("Palit GeForce RTX 3080 GamingPro OC LHR", videocard); // замени name на название видюхи
+        videcards_names[8] = "Palit GeForce RTX 3080 GamingPro OC LHR";
         videocard = new String[]{"69990", "2020", "GDDR6", "8", "256", "14000","220"};
         videocards.put("GeForce RTX 3070 GameRock V1", videocard); // замени name на название видюхи
+        videcards_names[9] = "GeForce RTX 3070 GameRock V1";
         videocard = new String[]{"59900", "2020", "GDDR6", "8", "192", "15000","170"};
         videocards.put("KFA2 GeForce RTX 3060 CORE", videocard); // замени name на название видюхи
+        videcards_names[10] = "KFA2 GeForce RTX 3060 CORE";
         videocard = new String[]{"29900", "2020", "GDDR6", "8", "128", "14000","130"};
         videocards.put("ASUS GeForce RTX 3050 Dual V2 OC Edition", videocard); // замени name на название видюхи
+        videcards_names[11] = "ASUS GeForce RTX 3050 Dual V2 OC Edition";
         videocard = new String[]{"24990", "2019", "GDDR6", "8", "256", "14000","175"};
         videocards.put("GIGABYTE GeForce RTX 2060 SUPER WINDFORCE OC", videocard); // замени name на название видюхи
+        videcards_names[12] = "GIGABYTE GeForce RTX 2060 SUPER WINDFORCE OC";
         videocard = new String[]{"20990", "2019", "GDDR6", "6", "192", "14000","175"};
         videocards.put("GIGABYTE GeForce RTX 2060 D6 6G", videocard); // замени name на название видюхи
+        videcards_names[13] = "GIGABYTE GeForce RTX 2060 D6 6G";
         videocard = new String[]{"19990", "2019", "GDDR6", "6", "192", "14000","125"};
         videocards.put("GIGABYTE GeForce GTX 1660 SUPER D6", videocard); // замени name на название видюхи
+        videcards_names[14] = "GIGABYTE GeForce GTX 1660 SUPER D6";
         videocard = new String[]{"13990", "2019", "GDDR5", "4", "192", "14000","75"};
         videocards.put("ASUS GeForce GTX 1650 Dual EVO OC Edition", videocard); // замени name на название видюхи
+        videcards_names[15] = "ASUS GeForce GTX 1650 Dual EVO OC Edition";
         videocard = new String[]{"14990", "2019", "GDDR6", "8", "192", "14000","130"};
         videocards.put("ASRock AMD Radeon RX 5500 XT", videocard); // замени name на название видюхи
+        videcards_names[16] = "ASRock AMD Radeon RX 5500 XT";
         videocard = new String[]{"4990", "2016", "GDDR5", "4", "192", "7008","75"};
         videocards.put("ASUS GeForce GTX 1050 Ti Cerberus OC Edition", videocard); // замени name на название видюхи
+        videcards_names[17] = "ASUS GeForce GTX 1050 Ti Cerberus OC Edition";
         videocard = new String[]{"5990", "2016", "GDDR5", "8", "256", "7008","185"};
         videocards.put("PowerColor AMD Radeon RX 580 Red Dragon", videocard); // замени name на название видюхи
+        videcards_names[18] = "PowerColor AMD Radeon RX 580 Red Dragon";
         videocard = new String[]{"6799", "2016", "GDDR5", "4", "64", "6000","30"};
         videocards.put("GIGABYTE GeForce GT 1030 Low Profile D4 2G", videocard); // замени name на название видюхи
-
+        videcards_names[19] = "GIGABYTE GeForce GT 1030 Low Profile D4 2G";
         // до сюда
     }
 
@@ -181,12 +200,16 @@ public class Settings {
         // копировать от сюда
         culer = new String[]{"890", "LGA 1150, LGA 1151, LGA 1151-v2, LGA 1155, LGA 1156, LGA 1200", "2000", "82"};
         culers.put("DEEPCOOL Theta 9", culer); // замени name на название кулера
+        cooler_names[0] = "DEEPCOOL Theta 9";
         culer = new String[]{"1790", "AM4, LGA 1150, LGA 1151, LGA 1151-v2, LGA 1155, LGA 1156, LGA 1200, LGA 1700", "1500", "180"};
         culers.put("ID-COOLING SE-214-XT", culer); // замени name на название кулера
+        cooler_names[1] = "ID-COOLING SE-214-XT";
         culer = new String[]{"1190", "AM2, AM2+, AM3, AM3+, AM4, FM1, FM2, LGA 775, LGA 1150, LGA 1151, LGA 1151-v2, LGA 1155, LGA 1156, LGA 1200", "1600", "95"};
         culers.put("DEEPCOOL Gamma Archer", culer); // замени name на название кулера
+        cooler_names[2] = "DEEPCOOL Gamma Archer";
         culer = new String[]{"3190", "AM4, AM5, LGA 1150, LGA 1151, LGA 1151-v2, LGA 1155, LGA 1156, LGA 1200, LGA 1700", "1600", "230"};
         culers.put("PCCooler K4 WH", culer); // замени name на название кулера
+        cooler_names[3] = "PCCooler K4 WH";
         // до сюда не включительно
     }
 
@@ -204,24 +227,34 @@ public class Settings {
         // копировать от сюда
         disk = new String[]{ "500", "sata3", "512", "7200"};
         disks.put("WD Blue 512gb", disk);
+        disks_names[0] = "WD Blue 512gb";
         disk = new String[]{"1000", "sata3", "1024", "7200"};
         disks.put("WD Blue 1tb", disk);
+        disks_names[1] = "WD Blue 1tb";
         disk = new String[]{"2000", "sata3", "2048", "7200"};
         disks.put("WD Blue 2tb", disk);
+        disks_names[2] = "WD Blue 2tb";
         disk = new String[]{"400", "sata3", "512", "5200"};
         disks.put("WD Ultrastar DC HA210 512gb", disk);
+        disks_names[3] = "WD Ultrastar DC HA210 512gb";
         disk = new String[]{"890", "sata3", "1024", "5200"};
         disks.put("WD Ultrastar DC HA210 1tb", disk);
+        disks_names[4] = "WD Ultrastar DC HA210 1tb";
         disk = new String[]{"1890", "sata3", "2048", "5200"};
         disks.put("WD Ultrastar DC HA210 2tb", disk);
+        disks_names[5] = "WD Ultrastar DC HA210 2tb";
         disk = new String[]{"1280", "sata3", "1024", "320"};
-        disks.put("Kingston A400", disk);
+        disks.put("Kingstone A400", disk);
+        disks_names[6] = "Kingstone A400";
         disk = new String[]{"1990", "sata3", "256", "560"};
         disks.put("HP S750", disk);
+        disks_names[7] = "HP S750";
         disk = new String[]{"3990", "m2", "512", "650"};
         disks.put("HP EX900", disk);
+        disks_names[8] = "HP EX900";
         disk = new String[]{"5900", "m2", "1024", "1300"};
         disks.put("ARDOR GAMING Ally AL1282", disk);
+        disks_names[9] = "ARDOR GAMING Ally AL1282";
         // до сюда
     }
 
@@ -234,42 +267,53 @@ public class Settings {
         // копировать от сюда
         psu = new String[]{"1999", "20+4", "4+4", "-", "350"};
         psus.put("AeroCool VX PLUS 350W", psu); // замени name на название блока
+        psus_names[0] = "AeroCool VX PLUS 350W";
         psu = new String[]{"2899", "20+4", "4+4", "6+2 x2", "350"};
         psus.put("DEEPCOOL PF350", psu); // замени name на название блока
+        psus_names[1] = "DEEPCOOL PF350";
         psu = new String[]{"4999", "24", "4+4", "6+2 x2", "700"};
         psus.put("FSP PNR PRO 700W", psu); // замени name на название блока
+        psus_names[2] = "FSP PNR PRO 700W";
         psu = new String[]{"5499", "20+4", "4+4", "6+2 x2", "700"};
         psus.put("AeroCool KCAS PLUS 700W", psu); // замени name на название блока
+        psus_names[3] = "AeroCool KCAS PLUS 700W";
         psu = new String[]{"7699", "20+4", "4+4", "6+2 x2", "550"};
         psus.put("SYSTEM POWER 10 550W", psu); // замени name на название блокa
+        psus_names[4] = "SYSTEM POWER 10 550W";
         psu = new String[]{"12399", "20+4", "4+4", "6+2 x2", "650"};
         psus.put("Pure Power 12 M 650W", psu); // замени name на название блока
+        psus_names[5] = "Pure Power 12 M 650W";
         psu = new String[]{"34799", "20+4", "4+4", "6+2 x2", "1000"};
         psus.put("DARK POWER 13 1000W", psu); // замени name на название блока
+        psus_names[6] = "DARK POWER 13 1000W";
         // до сюда не включительно
 
     }
 
-        private void cases_make(){
-            // корпуса
+    private void cases_make(){
+        // корпуса
 
-            String[] casee = new String[4];
-            // {price, size}
-            // копировать от сюда
-            casee = new String[]{"1499", "Micro-ATX"};
-            cases.put("DEXP DC-302B", casee);
-            casee = new String[]{"1999", "Standart-ATX"};
-            cases.put("DEXP AWS-DE7", casee);
-            casee = new String[]{"2590", "E-ATX"};
-            cases.put("AeroCool Bolt", casee);
-            casee = new String[]{"3099", "not-standart"};
-            cases.put("AeroCool Aero One", casee);
-            casee = new String[]{"5890", "micro-ATX"};
-            cases.put("ZALMAN S4 PLUS", casee);
+        String[] casee = new String[4];
+        // {price, size}
+        // копировать от сюда
+        casee = new String[]{"1499", "Micro-ATX"};
+        cases.put("DEXP DC-302B", casee);
+        cases_names[0] = "DEXP DC-302B";
+        casee = new String[]{"1999", "Standart-ATX"};
+        cases.put("DEXP AWS-DE7", casee);
+        cases_names[1] = "DEXP AWS-DE7";
+        casee = new String[]{"2590", "E-ATX"};
+        cases.put("AeroCool Bolt", casee);
+        cases_names[2] = "AeroCool Bolt";
+        casee = new String[]{"3099", "not-standart"};
+        cases.put("AeroCool Aero One", casee);
+        cases_names[3] = "AeroCool Aero One";
+        casee = new String[]{"5890", "micro-ATX"};
+        cases.put("ZALMAN S4 PLUS", casee);
+        cases_names[4] = "ZALMAN S4 PLUS";
                 // до сюда не включительно
         }
-
-        private void motherboards_make(){
+    private void motherboards_make(){
         // материнки
         String[] motherb = new String[8];
 
@@ -330,7 +374,7 @@ public class Settings {
 
     }
 
-        private void proccessors_make(){
+    private void proccessors_make(){
             // процессоры
 
             String[] proc = new String[20];
@@ -428,7 +472,7 @@ public class Settings {
             processors.put("intel", intel);
     }
 
-        protected boolean string_checker(String string1, String string2){
+    protected boolean string_checker(String string1, String string2){
             boolean answer;
             answer = true;
             if (string1.length() == string2.length()){
@@ -441,7 +485,7 @@ public class Settings {
             return answer;
         }
 
-        protected String[] find_the_name_of_ram(String ram){
+    protected String[] find_the_name_of_ram(String ram){
             String name="", number="";
             for (int i=0;i<ram.length();i++){
                 if (ram.charAt(ram.length()-1-i) == ' '){
@@ -453,7 +497,7 @@ public class Settings {
             return new String[]{name, number};
         }
 
-        protected String[] find_the_name_of_disk(String disk){
+    protected String[] find_the_name_of_disk(String disk){
             String name="", number="";
             for (int i=0;i<disk.length();i++){
                 if (disk.charAt(disk.length()-1-i) == ' '){

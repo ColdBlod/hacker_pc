@@ -149,7 +149,6 @@ public class Database {
                 fileWriter.close();
             } catch (Exception exception) {exception.printStackTrace();}
         }
-        money = 1000000;
 
         universities = new String[20];
         universities[0] = "internet course step 1";
@@ -228,6 +227,28 @@ public class Database {
         } catch (Exception e){
             e.printStackTrace();
         }
+        try{
+            FileWriter fileWriter1 = new FileWriter(path + "/details.txt");
+            fileWriter1.write("0\n");
+            for (int i=0;i<processors_inventory_len;i++) fileWriter1.write(processors[i] + ",");
+            fileWriter1.write("\n1\n");
+            for (int i=0;i<motherboard_inventory_len;i++) fileWriter1.write(motherboards[i] + ",");
+            fileWriter1.write("\n2\n");
+            for (int i=0;i<ram_inventory_len;i++) fileWriter1.write(rams[i] + ",");
+            fileWriter1.write("\n3\n");
+            for (int i=0;i<cases_inventory_len;i++) fileWriter1.write(cases[i] + ",");
+            fileWriter1.write("\n4\n");
+            for (int i=0;i<psus_inventory_len;i++) fileWriter1.write(psus[i] + ",");
+            fileWriter1.write("\n5\n");
+            for (int i=0;i<disks_inventory_len;i++) fileWriter1.write(disks[i] + ",");
+            fileWriter1.write("\n6\n");
+            for (int i=0;i<coolers_inventory_len;i++) fileWriter1.write(coolers[i] + ",");
+            fileWriter1.write("\n7\n");
+            for (int i=0;i<videocards_inventory_len;i++) fileWriter1.write(videocards[i] + ",");
+            fileWriter1.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void remove_ram_element(int number){
@@ -248,5 +269,84 @@ public class Database {
         }
         disks[6] = "";
         disks_inventory_len -= 1;
+    }
+    protected boolean string_checker(String string1, String string2){
+        boolean answer;
+        answer = true;
+        if (string1.length() == string2.length()){
+            for (int i = 0; i < string1.length(); i++) {
+                if (string1.charAt(i) != string2.charAt(i)) answer = false;
+            }
+        } else {
+            answer = false;
+        }
+        return answer;
+    }
+    protected void add_element_to_inventory(String name_element, int category){
+        if (category == 0){
+            for (int i=0;i<11;i++){
+                if (processors[i] == null){
+                    processors_inventory_len ++;
+                    processors[i] = name_element;
+                    break;
+                }
+            }
+        } else if (category == 1){
+            for (int i=0;i<11;i++){
+                if (motherboards[i] == null){
+                    motherboard_inventory_len ++;
+                    motherboards[i] = name_element;
+                    break;
+                }
+            }
+        } else if (category == 2){
+            for (int i=0;i<11;i++){
+                if (rams[i] == null){
+                    ram_inventory_len ++;
+                    rams[i] = name_element + " 1";
+                    break;
+                }
+            }
+        } else if (category == 3){
+            for (int i=0;i<11;i++){
+                if (coolers[i] == null){
+                    coolers_inventory_len ++;
+                    coolers[i] = name_element;
+                    break;
+                }
+            }
+        } else if (category == 4){
+            for (int i=0;i<11;i++){
+                if (psus[i] == null){
+                    psus_inventory_len ++;
+                    psus[i] = name_element;
+                    break;
+                }
+            }
+        } else if (category == 5){
+            for (int i=0;i<11;i++){
+                if (disks[i] == null){
+                    disks_inventory_len ++;
+                    disks[i] = name_element + " 1";
+                    break;
+                }
+            }
+        } else if (category == 6){
+            for (int i=0;i<11;i++){
+                if (videocards[i] == null){
+                    videocards_inventory_len ++;
+                    videocards[i] = name_element;
+                    break;
+                }
+            }
+        } else if (category == 7){
+            for (int i=0;i<11;i++){
+                if (cases[i] == null){
+                    cases_inventory_len ++;
+                    cases[i] = name_element;
+                    break;
+                }
+            }
+        }
     }
 }
