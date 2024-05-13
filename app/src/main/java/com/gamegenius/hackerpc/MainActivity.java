@@ -234,8 +234,8 @@ public class MainActivity extends Activity {
         ImageButton keyboard = findViewById(R.id.clicking_keyboard_btn);
         ImageView monitor = findViewById(R.id.clicking_monitor);
         TextView monitor_lb = findViewById(R.id.clicking_monitortext_lb);
-        ImageButton drink_btn = findViewById(R.id.clicking_drink_btn);
-        ImageButton eat_btn = findViewById(R.id.clicking_eat_btn);
+        //ImageButton drink_btn = findViewById(R.id.clicking_drink_btn);
+        //ImageButton eat_btn = findViewById(R.id.clicking_eat_btn);
         // end
 
         keyboard.setScaleType(ImageView.ScaleType.FIT_END);
@@ -774,7 +774,7 @@ public class MainActivity extends Activity {
                             InputStream inputStream = getAssets().open("processors/" + name_element + ".png");
                             img_drawable = Drawable.createFromStream(inputStream, name_element);
                         } catch (Exception e){e.printStackTrace();}
-                        buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, 0, 0);setContentView(R.layout.magazine_activity);ini_magazine();}});
+                        buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, 0, 0);}});
                         break;
                     }
                 }
@@ -809,7 +809,7 @@ public class MainActivity extends Activity {
                         InputStream inputStream = getAssets().open("motherboards/" + name_element + ".png");
                         img_drawable = Drawable.createFromStream(inputStream, name_element);
                     } catch (Exception e){e.printStackTrace();}
-                    buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+                    buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);}});
                     break;
                 }
             }
@@ -827,7 +827,7 @@ public class MainActivity extends Activity {
                 InputStream inputStream = getAssets().open("rams/" + name_element + ".png");
                 img_drawable = Drawable.createFromStream(inputStream, name_element);
             } catch (Exception e) {e.printStackTrace();}
-            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);}});
         }
         else if (category == 3){
             String[] characteristics = settings.culers.get(name_element);
@@ -840,7 +840,7 @@ public class MainActivity extends Activity {
                 InputStream inputStream = getAssets().open("coolers/" + name_element + ".png");
                 img_drawable = Drawable.createFromStream(inputStream, name_element);
             } catch (Exception e) {e.printStackTrace();}
-            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);}});
         }
         else if (category == 4){
             String[] characteristics = settings.psus.get(name_element);
@@ -853,7 +853,7 @@ public class MainActivity extends Activity {
                 InputStream inputStream = getAssets().open("psus/" + name_element + ".png");
                 img_drawable = Drawable.createFromStream(inputStream, name_element);
             } catch (Exception e) {e.printStackTrace();}
-            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);}});
 
         }
         else if (category == 5){
@@ -866,7 +866,7 @@ public class MainActivity extends Activity {
                 InputStream inputStream = getAssets().open("disks/" + name_element + ".png");
                 img_drawable = Drawable.createFromStream(inputStream, name_element);
             } catch (Exception e){e.printStackTrace();}
-            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);}});
 
         }
         else if (category == 6){
@@ -882,7 +882,7 @@ public class MainActivity extends Activity {
                 InputStream inputStream = getAssets().open("videocards/" + name_element + ".png");
                 img_drawable = Drawable.createFromStream(inputStream, name_element);
             } catch (Exception e) {e.printStackTrace();}
-            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);}});
 
         }
         else if (category == 7){
@@ -893,7 +893,7 @@ public class MainActivity extends Activity {
                 InputStream inputStream = getAssets().open("cases/" + name_element + ".png");
                 img_drawable = Drawable.createFromStream(inputStream, name_element);
             } catch (Exception e){e.printStackTrace();}
-            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);setContentView(R.layout.magazine_activity);ini_magazine();}});
+            buy_btn.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {buy_element(name_element, category, type);}});
 
         }
 
@@ -902,6 +902,29 @@ public class MainActivity extends Activity {
         buy_btn.setText("BUY\n" + price + "$");
 
         back.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
+    }
+    protected void good_shop(){
+        // inzialization
+        TextView tx = findViewById(R.id.horrey_text_lb);
+        Button claim = findViewById(R.id.horrey_get_btn);
+        // end
+
+        tx.setTextColor(getColor(R.color.green));
+        tx.setText("Success!");
+
+        claim.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
+    }
+
+    protected void bad_shop(){
+        // inzialization
+        TextView tx = findViewById(R.id.horrey_text_lb);
+        Button claim = findViewById(R.id.horrey_get_btn);
+        // end
+
+        tx.setTextColor(getColor(R.color.red));
+        tx.setText("Error!\\nInsufficient funds on balance");
+
+        claim.setOnClickListener(new View.OnClickListener() {@Override public void onClick(View v) {setContentView(R.layout.magazine_activity);ini_magazine();}});
     }
 
     protected void buy_element(String name_element, int category, int type){
@@ -947,7 +970,8 @@ public class MainActivity extends Activity {
             price = Integer.parseInt(settings.cases.get(name_element)[0]);
             if (db.money >= price) db.add_element_to_inventory(name_element, 7);
         }
-        if (db.money >= price) {db.money -= price;}
+        if (db.money >= price) {db.money -= price;setContentView(R.layout.horrey_activity);good_shop();}
+        else {setContentView(R.layout.horrey_activity);bad_shop();System.out.println("ok");}
 
     }
 
